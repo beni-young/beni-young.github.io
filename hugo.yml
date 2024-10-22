@@ -13,7 +13,7 @@ buildExpired: false
 
 minify:
   disableXML: true
-  minifyOutput: true
+  minifyOutput: false
 
 params:
   enableEmoji : true
