@@ -1,0 +1,160 @@
+baseURL: "https://beni-young.github.io/github-portfolio"
+LanguageCode: en-us
+title: Beni Young Profile
+pagerSize: 5
+theme: PaperMod
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+#googleAnalytics: UA-123-45
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+params:
+  enableEmoji : true
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  title: Beni Young Profile
+  description: "Beni Young Data Analyst Profile"
+  keywords: [Blog, Portfolio, Data Analytics, Data Engineer, Data Scientist]
+  author: Me
+  # author: ["Me", "You"] # multiple authors
+  images: [static/images/5095904.jpg]
+  DateFormat: "January 2, 2006"
+  defaultTheme: auto # dark, light
+  disableThemeToggle: false
+
+  ShowReadingTime: false
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: false
+  ShowWordCount: false
+  ShowRssButtonInSectionTermList: false
+  UseHugoToc: false
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  comments: false
+  hidemeta: false
+  hideSummary: false
+  showtoc: false
+  tocopen: false
+  social: true
+ 
+  assets:
+    # disableHLJS: true # to disable highlight.js
+    # disableFingerprinting: true
+    favicon: "<link / abs url>"
+    favicon16x16: "<link / abs url>"
+    favicon32x32: "<link / abs url>"
+    apple_touch_icon: "<link / abs url>"
+    safari_pinned_tab: "<link / abs url>"
+
+  label:
+    text: "andronicus.cc"
+    icon: /apple-touch-icon.png
+    iconHeight: 35
+
+  # profile-mode
+  profileMode:
+    enabled: false # needs to be explicitly set
+    Title: "Beni Young"
+    subtitle: ""
+    imageUrl: "tinywow_remove_bg_1358085.jpg" # optional   
+    imageWidth: 200
+    imageHeight: 200
+    imageTitle: my image
+    buttons:
+      - name: Posts
+        url: posts
+      - name: Archives
+        url: archives
+      - name: Github
+        url: "https://github.com/beni-young" 
+
+  socialIcons:
+    - name: linkedin
+      url: "https://www.linkedin.com/in/beni-young-0531a3235/"
+    - name: github
+      url: "https://github.com/beni-young"
+    - name: email
+      url: "mailto:beni.young [at] gmail.com"
+
+  # home-info mode
+  homeInfoParams:
+    enable: true  
+    Title: 
+    Content: > 
+            . <img style="float: left; width: 30%;" src="images/tinywow_remove_bg_1358085.png">👾 This site is mostly meant to group together stuff I write in various places. It’s mainly focused on data science/data engineer/data analyst projects.  
+            I’m new on the scene of data analytics with a background in computer science, programming, machine learning, and statistics. My work spans the full spectrum from solving isolated data problems to building production applications. 👾  
+                         
+            
+ 
+  cover:
+    hidden: false # hide everywhere but not in structured data
+    hiddenInList: false # hide on list pages and home
+    hiddenInSingle: false # hide on single page
+
+  editPost:
+    URL: "https://github.com/<path_to_repo>/content"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
+
+  # for search
+  # https://fusejs.io/api/options.html
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+menu:
+  main:
+    - identifier: post
+      name: Post
+      url: /content/post/
+      weight: 10
+    - identifier: archives
+      name: Archives
+      url: /archives/
+      weight: 20
+    - identifier: linkedin
+      name: Linkedin
+      url: "https://www.linkedin.com/in/beni-young-0531a3235/"
+      weight: 30
+    - identifier: github
+      name: Github
+      url: "https://github.com/beni-young"
+      weight: 40
+    
+# Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
+pygmentsUseClasses: true
+
+#markup:
+ # highlight:
+  #  noClasses: false
+    # anchorLineNos: true
+    # codeFences: true
+    # guessSyntax: true
+    # lineNos: true
+    # style: monokai
+
+markup:  
+  goldmark:
+    extensions:     
+    parser:      
+    renderer:
+      hardWraps: false
+      unsafe: true
+      xhtml: true
+  highlight:    
+    noClasses: true
+    
+  
+
