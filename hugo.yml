@@ -99,10 +99,10 @@ params:
     hiddenInList: false # hide on list pages and home
     hiddenInSingle: false # hide on single page
 
-  editPost:
-    URL: "https://github.com/<path_to_repo>/content"
-    Text: "Suggest Changes" # edit text
-    appendFilePath: true # to append file path to Edit link
+  # editPost:
+    # URL: "https://github.com/<path_to_repo>/content"
+    # Text: "Suggest Changes" # edit text
+    # appendFilePath: true # to append file path to Edit link
 
   # for search
   # https://fusejs.io/api/options.html
@@ -116,22 +116,26 @@ params:
     keys: ["title", "permalink", "summary", "content"]
 menu:
   main:
+    - identifier: resume
+      name: Resume
+      url: /resume/
+      weight: 10
     - identifier: post
       name: Post
       url: /post/
-      weight: 10
+      weight: 20
     - identifier: archives
       name: Archives
       url: /archives/
-      weight: 20
+      weight: 30
     - identifier: linkedin
       name: Linkedin
       url: "https://www.linkedin.com/in/beni-young-0531a3235/"
-      weight: 30
+      weight: 40
     - identifier: github
       name: Github
       url: "https://github.com/beni-young"
-      weight: 40
+      weight: 50
     
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
