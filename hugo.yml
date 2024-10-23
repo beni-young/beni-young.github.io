@@ -1,4 +1,4 @@
-baseURL: "https://beni-young.github.io/github-portfolio/"
+baseURL: "//beni-young.github.io/github-portfolio"
 LanguageCode: en-us
 title: Beni Young Profile
 pagerSize: 5
@@ -118,7 +118,7 @@ menu:
   main:
     - identifier: post
       name: Post
-      url: /content/post/
+      url: /post/
       weight: 10
     - identifier: archives
       name: Archives

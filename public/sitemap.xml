@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/github-portfolio/</loc>
+    <loc>//localhost:1313/github-portfolio/</loc>
     <lastmod>2023-05-29T11:58:08-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/post/</loc>
+    <loc>//localhost:1313/github-portfolio/post/</loc>
     <lastmod>2023-05-29T11:58:08-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/post/uber-data-analytics/</loc>
+    <loc>//localhost:1313/github-portfolio/post/uber-data-analytics/</loc>
     <lastmod>2023-05-29T11:58:08-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/post/project-1/</loc>
+    <loc>//localhost:1313/github-portfolio/post/project-1/</loc>
     <lastmod>2023-05-27T10:58:08-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/post/project-3/</loc>
+    <loc>//localhost:1313/github-portfolio/post/project-3/</loc>
     <lastmod>2023-05-11T11:13:32-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/post/project-2/</loc>
+    <loc>//localhost:1313/github-portfolio/post/project-2/</loc>
     <lastmod>2023-05-10T11:00:59-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/archives/</loc>
+    <loc>//localhost:1313/github-portfolio/archives/</loc>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/categories/</loc>
+    <loc>//localhost:1313/github-portfolio/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/github-portfolio/tags/</loc>
+    <loc>//localhost:1313/github-portfolio/tags/</loc>
   </url>
 </urlset>
