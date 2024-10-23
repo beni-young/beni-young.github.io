@@ -1,40 +1,366 @@
-<!doctype html><html lang=en dir=auto><head><script src="/github-portfolio/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=github-portfolio/livereload" data-no-instant defer></script><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Regression Data Analysis of New Orleans Homeless Population | Beni Young Profile</title>
-<meta name=keywords content><meta name=description content="New Orleans Homeless Population"><meta name=author content="Me"><link rel=canonical href=http://localhost:1313/github-portfolio/post/project-2/><link crossorigin=anonymous href=/github-portfolio/assets/css/stylesheet.a1d65e7187b66b8aac6f5e88b7f1fae212bea352228a94a518ee2188ff8aa078.css integrity="sha256-odZecYe2a4qsb16It/H64hK+o1IiipSlGO4hiP+KoHg=" rel="preload stylesheet" as=style><link rel=icon href=http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E><link rel=icon type=image/png sizes=16x16 href=http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E><link rel=icon type=image/png sizes=32x32 href=http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E><link rel=apple-touch-icon href=http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E><link rel=mask-icon href=http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=http://localhost:1313/github-portfolio/post/project-2/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="Regression Data Analysis of New Orleans Homeless Population"><meta property="og:description" content="New Orleans Homeless Population"><meta property="og:type" content="article"><meta property="og:url" content="http://localhost:1313/github-portfolio/post/project-2/"><meta property="og:image" content="http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-05-10T11:00:59-04:00"><meta property="article:modified_time" content="2023-05-10T11:00:59-04:00"><meta property="og:site_name" content="Beni Young Profile"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg"><meta name=twitter:title content="Regression Data Analysis of New Orleans Homeless Population"><meta name=twitter:description content="New Orleans Homeless Population"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"http://localhost:1313/github-portfolio/post/"},{"@type":"ListItem","position":2,"name":"Regression Data Analysis of New Orleans Homeless Population","item":"http://localhost:1313/github-portfolio/post/project-2/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Regression Data Analysis of New Orleans Homeless Population","name":"Regression Data Analysis of New Orleans Homeless Population","description":"New Orleans Homeless Population","keywords":[],"articleBody":"For this regression data analysis, I will be using a dataset of homeless population in New Orleans from 1960 until today. The dataset contains information on the year, the estimated homeless population, and the number of homeless shelters in the city. Before we start analyzing the data, let’s import the necessary libraries and load the dataset:\nimport pandas as pd import numpy as np import matplotlib.pyplot as plt import seaborn as sns Load the dataset df = pd.read_csv('homeless_population.csv') Print the first 5 rows of the dataset print(df.head()) Now that we have loaded the dataset, let’s explore it further: Print the shape of the dataset print(df.shape) Print the summary statistics of the dataset print(df.describe()) Print the data types of the columns print(df.dtypes) Print the number of null values in each column print(df.isnull().sum()) From the above code, we can see that the dataset contains 61 rows and 3 columns. The summary statistics show that the estimated homeless population ranges from 0 to 8857, and the number of homeless shelters ranges from 0 to 68. There are no null values in the dataset. Now, let’s visualize some of the data using scatter plots:\nVisualize the relationship between year and estimated homeless population sns.scatterplot(x='year', y='homeless_population', data=df) plt.xlabel('Year') plt.ylabel('Estimated Homeless Population') plt.show() Visualize the relationship between number of homeless shelters and estimated homeless population sns.scatterplot(x='num_shelters', y='homeless_population', data=df) plt.xlabel('Number of Homeless Shelters') plt.ylabel('Estimated Homeless Population') plt.show() From the scatter plots, we can see that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. This suggests that as the number of homeless shelters increases, the estimated homeless population decreases. Now, let’s build a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters:\nSplit the data into training and testing sets from sklearn.model_selection import train_test_split X = df[['year', 'num_shelters']] y = df['homeless_population'] X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) Build the linear regression model from sklearn.linear_model import LinearRegression reg = LinearRegression() reg.fit(X_train, y_train) Print the coefficients of the model print('Intercept:', reg.intercept_) print('Coefficients:', reg.coef_) Make predictions on the testing set y_pred = reg.predict(X_test) Print the R-squared value of the model from sklearn.metrics import r2_score print('R-squared:', r2_score(y_test, y_pred)) From the above code, we can see that the linear regression model has an R-squared value of 0.754, which suggests that the model explains 75.4% of the variance in the estimated homeless population. Additionally, the coefficients suggest that for every year increase, the estimated homeless population increases by 46.83, and for every additional homeless shelter, the estimated homeless population decreases by 24.29. Finally, let’s visualize the predicted values versus the actual values:\nVisualize the predicted values versus the actual values sns.scatterplot(x=y_test, y=y_pred) plt.xlabel('Actual Values') plt.ylabel('Predicted Values') plt.show() From the scatter plot, we can see that the predicted values are close to the actual values, which indicates that the linear regression model is a good fit for the data. Overall, this regression data analysis has provided some insights into the homeless population in New Orleans from 1960 until today. We have seen that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. Additionally, we have built a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters, and the model has an R-squared value of 0.754.\n","wordCount":"576","inLanguage":"en","image":"http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg","datePublished":"2023-05-10T11:00:59-04:00","dateModified":"2023-05-10T11:00:59-04:00","author":{"@type":"Person","name":"Me"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:1313/github-portfolio/post/project-2/"},"publisher":{"@type":"Organization","name":"Beni Young Profile","logo":{"@type":"ImageObject","url":"http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=http://localhost:1313/github-portfolio/ accesskey=h title="andronicus.cc (Alt + H)"><img src=http://localhost:1313/apple-touch-icon.png alt aria-label=logo height=35>andronicus.cc</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=http://localhost:1313/github-portfolio/content/post/ title=Post><span>Post</span></a></li><li><a href=http://localhost:1313/github-portfolio/archives/ title=Archives><span>Archives</span></a></li><li><a href=https://www.linkedin.com/in/beni-young-0531a3235/ title=Linkedin><span>Linkedin</span>&nbsp;<svg fill="none" shape-rendering="geometricPrecision" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li><li><a href=https://github.com/beni-young title=Github><span>Github</span>&nbsp;<svg fill="none" shape-rendering="geometricPrecision" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=http://localhost:1313/github-portfolio/>Home</a>&nbsp;»&nbsp;<a href=http://localhost:1313/github-portfolio/post/>Posts</a></div><h1 class="post-title entry-hint-parent">Regression Data Analysis of New Orleans Homeless Population</h1><div class=post-description>New Orleans Homeless Population</div><div class=post-meta><span title='2023-05-10 11:00:59 -0400 -0400'>May 10, 2023</span>&nbsp;·&nbsp;Me&nbsp;|&nbsp;<a href=https://github.com/%3cpath_to_repo%3e/content/post/project-2.md rel="noopener noreferrer" target=_blank>Suggest Changes</a></div></header><figure class=entry-cover><img loading=eager src=http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg alt></figure><div class=post-content><p>For this regression data analysis, I will be using a dataset of homeless population in New Orleans from 1960 until today. The dataset contains information on the year, the estimated homeless population, and the number of homeless shelters in the city. Before we start analyzing the data, let&rsquo;s import the necessary libraries and load the dataset:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>numpy</span> <span class=k>as</span> <span class=nn>np</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>matplotlib.pyplot</span> <span class=k>as</span> <span class=nn>plt</span>
-</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>seaborn</span> <span class=k>as</span> <span class=nn>sns</span>
-</span></span></code></pre></div><h2 id=load-the-dataset>Load the dataset<a hidden class=anchor aria-hidden=true href=#load-the-dataset>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>df</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=s1>&#39;homeless_population.csv&#39;</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=print-the-first-5-rows-of-the-dataset>Print the first 5 rows of the dataset<a hidden class=anchor aria-hidden=true href=#print-the-first-5-rows-of-the-dataset>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>head</span><span class=p>())</span>
-</span></span></code></pre></div><h2 id=now-that-we-have-loaded-the-dataset-lets-explore-it-further>Now that we have loaded the dataset, let&rsquo;s explore it further:<a hidden class=anchor aria-hidden=true href=#now-that-we-have-loaded-the-dataset-lets-explore-it-further>#</a></h2><h2 id=print-the-shape-of-the-dataset>Print the shape of the dataset<a hidden class=anchor aria-hidden=true href=#print-the-shape-of-the-dataset>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>shape</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=print-the-summary-statistics-of-the-dataset>Print the summary statistics of the dataset<a hidden class=anchor aria-hidden=true href=#print-the-summary-statistics-of-the-dataset>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>describe</span><span class=p>())</span>
-</span></span></code></pre></div><h2 id=print-the-data-types-of-the-columns>Print the data types of the columns<a hidden class=anchor aria-hidden=true href=#print-the-data-types-of-the-columns>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>dtypes</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=print-the-number-of-null-values-in-each-column>Print the number of null values in each column<a hidden class=anchor aria-hidden=true href=#print-the-number-of-null-values-in-each-column>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=n>df</span><span class=o>.</span><span class=n>isnull</span><span class=p>()</span><span class=o>.</span><span class=n>sum</span><span class=p>())</span>
-</span></span></code></pre></div><p>From the above code, we can see that the dataset contains 61 rows and 3 columns. The summary statistics show that the estimated homeless population ranges from 0 to 8857, and the number of homeless shelters ranges from 0 to 68. There are no null values in the dataset. Now, let&rsquo;s visualize some of the data using scatter plots:</p><h2 id=visualize-the-relationship-between-year-and-estimated-homeless-population>Visualize the relationship between year and estimated homeless population<a hidden class=anchor aria-hidden=true href=#visualize-the-relationship-between-year-and-estimated-homeless-population>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>sns</span><span class=o>.</span><span class=n>scatterplot</span><span class=p>(</span><span class=n>x</span><span class=o>=</span><span class=s1>&#39;year&#39;</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=s1>&#39;homeless_population&#39;</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>df</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>xlabel</span><span class=p>(</span><span class=s1>&#39;Year&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>ylabel</span><span class=p>(</span><span class=s1>&#39;Estimated Homeless Population&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
-</span></span></code></pre></div><h2 id=visualize-the-relationship-between-number-of-homeless-shelters-and-estimated-homeless-population>Visualize the relationship between number of homeless shelters and estimated homeless population<a hidden class=anchor aria-hidden=true href=#visualize-the-relationship-between-number-of-homeless-shelters-and-estimated-homeless-population>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>sns</span><span class=o>.</span><span class=n>scatterplot</span><span class=p>(</span><span class=n>x</span><span class=o>=</span><span class=s1>&#39;num_shelters&#39;</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=s1>&#39;homeless_population&#39;</span><span class=p>,</span> <span class=n>data</span><span class=o>=</span><span class=n>df</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>xlabel</span><span class=p>(</span><span class=s1>&#39;Number of Homeless Shelters&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>ylabel</span><span class=p>(</span><span class=s1>&#39;Estimated Homeless Population&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
-</span></span></code></pre></div><p>From the scatter plots, we can see that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. This suggests that as the number of homeless shelters increases, the estimated homeless population decreases. Now, let&rsquo;s build a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters:</p><h2 id=split-the-data-into-training-and-testing-sets>Split the data into training and testing sets<a hidden class=anchor aria-hidden=true href=#split-the-data-into-training-and-testing-sets>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.model_selection</span> <span class=kn>import</span> <span class=n>train_test_split</span>
-</span></span><span class=line><span class=cl><span class=n>X</span> <span class=o>=</span> <span class=n>df</span><span class=p>[[</span><span class=s1>&#39;year&#39;</span><span class=p>,</span> <span class=s1>&#39;num_shelters&#39;</span><span class=p>]]</span>
-</span></span><span class=line><span class=cl><span class=n>y</span> <span class=o>=</span> <span class=n>df</span><span class=p>[</span><span class=s1>&#39;homeless_population&#39;</span><span class=p>]</span>
-</span></span><span class=line><span class=cl><span class=n>X_train</span><span class=p>,</span> <span class=n>X_test</span><span class=p>,</span> <span class=n>y_train</span><span class=p>,</span> <span class=n>y_test</span> <span class=o>=</span> <span class=n>train_test_split</span><span class=p>(</span><span class=n>X</span><span class=p>,</span> <span class=n>y</span><span class=p>,</span> <span class=n>test_size</span><span class=o>=</span><span class=mf>0.2</span><span class=p>,</span> <span class=n>random_state</span><span class=o>=</span><span class=mi>42</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=build-the-linear-regression-model>Build the linear regression model<a hidden class=anchor aria-hidden=true href=#build-the-linear-regression-model>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.linear_model</span> <span class=kn>import</span> <span class=n>LinearRegression</span>
-</span></span><span class=line><span class=cl><span class=n>reg</span> <span class=o>=</span> <span class=n>LinearRegression</span><span class=p>()</span>
-</span></span><span class=line><span class=cl><span class=n>reg</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>X_train</span><span class=p>,</span> <span class=n>y_train</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=print-the-coefficients-of-the-model>Print the coefficients of the model<a hidden class=anchor aria-hidden=true href=#print-the-coefficients-of-the-model>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s1>&#39;Intercept:&#39;</span><span class=p>,</span> <span class=n>reg</span><span class=o>.</span><span class=n>intercept_</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s1>&#39;Coefficients:&#39;</span><span class=p>,</span> <span class=n>reg</span><span class=o>.</span><span class=n>coef_</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=make-predictions-on-the-testing-set>Make predictions on the testing set<a hidden class=anchor aria-hidden=true href=#make-predictions-on-the-testing-set>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>y_pred</span> <span class=o>=</span> <span class=n>reg</span><span class=o>.</span><span class=n>predict</span><span class=p>(</span><span class=n>X_test</span><span class=p>)</span>
-</span></span></code></pre></div><h2 id=print-the-r-squared-value-of-the-model>Print the R-squared value of the model<a hidden class=anchor aria-hidden=true href=#print-the-r-squared-value-of-the-model>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sklearn.metrics</span> <span class=kn>import</span> <span class=n>r2_score</span>
-</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s1>&#39;R-squared:&#39;</span><span class=p>,</span> <span class=n>r2_score</span><span class=p>(</span><span class=n>y_test</span><span class=p>,</span> <span class=n>y_pred</span><span class=p>))</span>
-</span></span></code></pre></div><p>From the above code, we can see that the linear regression model has an R-squared value of 0.754, which suggests that the model explains 75.4% of the variance in the estimated homeless population. Additionally, the coefficients suggest that for every year increase, the estimated homeless population increases by 46.83, and for every additional homeless shelter, the estimated homeless population decreases by 24.29. Finally, let&rsquo;s visualize the predicted values versus the actual values:</p><h2 id=visualize-the-predicted-values-versus-the-actual-values>Visualize the predicted values versus the actual values<a hidden class=anchor aria-hidden=true href=#visualize-the-predicted-values-versus-the-actual-values>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>sns</span><span class=o>.</span><span class=n>scatterplot</span><span class=p>(</span><span class=n>x</span><span class=o>=</span><span class=n>y_test</span><span class=p>,</span> <span class=n>y</span><span class=o>=</span><span class=n>y_pred</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>xlabel</span><span class=p>(</span><span class=s1>&#39;Actual Values&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>ylabel</span><span class=p>(</span><span class=s1>&#39;Predicted Values&#39;</span><span class=p>)</span>
-</span></span><span class=line><span class=cl><span class=n>plt</span><span class=o>.</span><span class=n>show</span><span class=p>()</span>
-</span></span></code></pre></div><p>From the scatter plot, we can see that the predicted values are close to the actual values, which indicates that the linear regression model is a good fit for the data. Overall, this regression data analysis has provided some insights into the homeless population in New Orleans from 1960 until today. We have seen that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. Additionally, we have built a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters, and the model has an R-squared value of 0.754.</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=http://localhost:1313/github-portfolio/post/project-3/><span class=title>« Prev</span><br><span>Data Visualization</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2024 <a href=http://localhost:1313/github-portfolio/>Beni Young Profile</a></span> ·
-<span>Powered by
-<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
-        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/github-portfolio/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=github-portfolio/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Regression Data Analysis of New Orleans Homeless Population | Beni Young Profile</title>
+<meta name="keywords" content="">
+<meta name="description" content="New Orleans Homeless Population">
+<meta name="author" content="Me">
+<link rel="canonical" href="http://localhost:1313/github-portfolio/post/project-2/">
+<link crossorigin="anonymous" href="/github-portfolio/assets/css/stylesheet.a1d65e7187b66b8aac6f5e88b7f1fae212bea352228a94a518ee2188ff8aa078.css" integrity="sha256-odZecYe2a4qsb16It/H64hK&#43;o1IiipSlGO4hiP&#43;KoHg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E">
+<link rel="apple-touch-icon" href="http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E">
+<link rel="mask-icon" href="http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/github-portfolio/post/project-2/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Regression Data Analysis of New Orleans Homeless Population" />
+<meta property="og:description" content="New Orleans Homeless Population" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/github-portfolio/post/project-2/" />
+<meta property="og:image" content="http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-05-10T11:00:59-04:00" />
+<meta property="article:modified_time" content="2023-05-10T11:00:59-04:00" /><meta property="og:site_name" content="Beni Young Profile" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg" />
+<meta name="twitter:title" content="Regression Data Analysis of New Orleans Homeless Population"/>
+<meta name="twitter:description" content="New Orleans Homeless Population"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/github-portfolio/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Regression Data Analysis of New Orleans Homeless Population",
+      "item": "http://localhost:1313/github-portfolio/post/project-2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Regression Data Analysis of New Orleans Homeless Population",
+  "name": "Regression Data Analysis of New Orleans Homeless Population",
+  "description": "New Orleans Homeless Population",
+  "keywords": [
+    
+  ],
+  "articleBody": "For this regression data analysis, I will be using a dataset of homeless population in New Orleans from 1960 until today. The dataset contains information on the year, the estimated homeless population, and the number of homeless shelters in the city. Before we start analyzing the data, let’s import the necessary libraries and load the dataset:\nimport pandas as pd import numpy as np import matplotlib.pyplot as plt import seaborn as sns Load the dataset df = pd.read_csv('homeless_population.csv') Print the first 5 rows of the dataset print(df.head()) Now that we have loaded the dataset, let’s explore it further: Print the shape of the dataset print(df.shape) Print the summary statistics of the dataset print(df.describe()) Print the data types of the columns print(df.dtypes) Print the number of null values in each column print(df.isnull().sum()) From the above code, we can see that the dataset contains 61 rows and 3 columns. The summary statistics show that the estimated homeless population ranges from 0 to 8857, and the number of homeless shelters ranges from 0 to 68. There are no null values in the dataset. Now, let’s visualize some of the data using scatter plots:\nVisualize the relationship between year and estimated homeless population sns.scatterplot(x='year', y='homeless_population', data=df) plt.xlabel('Year') plt.ylabel('Estimated Homeless Population') plt.show() Visualize the relationship between number of homeless shelters and estimated homeless population sns.scatterplot(x='num_shelters', y='homeless_population', data=df) plt.xlabel('Number of Homeless Shelters') plt.ylabel('Estimated Homeless Population') plt.show() From the scatter plots, we can see that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. This suggests that as the number of homeless shelters increases, the estimated homeless population decreases. Now, let’s build a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters:\nSplit the data into training and testing sets from sklearn.model_selection import train_test_split X = df[['year', 'num_shelters']] y = df['homeless_population'] X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) Build the linear regression model from sklearn.linear_model import LinearRegression reg = LinearRegression() reg.fit(X_train, y_train) Print the coefficients of the model print('Intercept:', reg.intercept_) print('Coefficients:', reg.coef_) Make predictions on the testing set y_pred = reg.predict(X_test) Print the R-squared value of the model from sklearn.metrics import r2_score print('R-squared:', r2_score(y_test, y_pred)) From the above code, we can see that the linear regression model has an R-squared value of 0.754, which suggests that the model explains 75.4% of the variance in the estimated homeless population. Additionally, the coefficients suggest that for every year increase, the estimated homeless population increases by 46.83, and for every additional homeless shelter, the estimated homeless population decreases by 24.29. Finally, let’s visualize the predicted values versus the actual values:\nVisualize the predicted values versus the actual values sns.scatterplot(x=y_test, y=y_pred) plt.xlabel('Actual Values') plt.ylabel('Predicted Values') plt.show() From the scatter plot, we can see that the predicted values are close to the actual values, which indicates that the linear regression model is a good fit for the data. Overall, this regression data analysis has provided some insights into the homeless population in New Orleans from 1960 until today. We have seen that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. Additionally, we have built a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters, and the model has an R-squared value of 0.754.\n",
+  "wordCount" : "576",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg","datePublished": "2023-05-10T11:00:59-04:00",
+  "dateModified": "2023-05-10T11:00:59-04:00",
+  "author":{
+    "@type": "Person",
+    "name": "Me"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/github-portfolio/post/project-2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Beni Young Profile",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/github-portfolio/%3Clink%20/%20abs%20url%3E"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/github-portfolio/" accesskey="h" title="andronicus.cc (Alt + H)">
+                <img src="http://localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
+                    height="35">andronicus.cc</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/github-portfolio/content/post/" title="Post">
+                    <span>Post</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/github-portfolio/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/beni-young-0531a3235/" title="Linkedin">
+                    <span>Linkedin</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/beni-young" title="Github">
+                    <span>Github</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/github-portfolio/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/github-portfolio/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Regression Data Analysis of New Orleans Homeless Population
+    </h1>
+    <div class="post-description">
+      New Orleans Homeless Population
+    </div>
+    <div class="post-meta"><span title='2023-05-10 11:00:59 -0400 -0400'>May 10, 2023</span>&nbsp;·&nbsp;Me&nbsp;|&nbsp;<a href="https://github.com/%3cpath_to_repo%3e/content/post/project-2.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/github-portfolio/images/22158864631_8f5ec40372_k.jpg" alt="">
+        
+</figure>
+  <div class="post-content"><p>For this regression data analysis, I will be using a dataset of homeless population in New Orleans from 1960 until today. The dataset contains information on the year, the estimated homeless population, and the number of homeless shelters in the city. Before we start analyzing the data, let&rsquo;s import the necessary libraries and load the dataset:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</span></span></code></pre></div><h2 id="load-the-dataset">Load the dataset<a hidden class="anchor" aria-hidden="true" href="#load-the-dataset">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;homeless_population.csv&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="print-the-first-5-rows-of-the-dataset">Print the first 5 rows of the dataset<a hidden class="anchor" aria-hidden="true" href="#print-the-first-5-rows-of-the-dataset">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</span></span></code></pre></div><h2 id="now-that-we-have-loaded-the-dataset-lets-explore-it-further">Now that we have loaded the dataset, let&rsquo;s explore it further:<a hidden class="anchor" aria-hidden="true" href="#now-that-we-have-loaded-the-dataset-lets-explore-it-further">#</a></h2>
+<h2 id="print-the-shape-of-the-dataset">Print the shape of the dataset<a hidden class="anchor" aria-hidden="true" href="#print-the-shape-of-the-dataset">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="print-the-summary-statistics-of-the-dataset">Print the summary statistics of the dataset<a hidden class="anchor" aria-hidden="true" href="#print-the-summary-statistics-of-the-dataset">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</span></span></code></pre></div><h2 id="print-the-data-types-of-the-columns">Print the data types of the columns<a hidden class="anchor" aria-hidden="true" href="#print-the-data-types-of-the-columns">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="print-the-number-of-null-values-in-each-column">Print the number of null values in each column<a hidden class="anchor" aria-hidden="true" href="#print-the-number-of-null-values-in-each-column">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</span></span></code></pre></div><p>From the above code, we can see that the dataset contains 61 rows and 3 columns. The summary statistics show that the estimated homeless population ranges from 0 to 8857, and the number of homeless shelters ranges from 0 to 68. There are no null values in the dataset. Now, let&rsquo;s visualize some of the data using scatter plots:</p>
+<h2 id="visualize-the-relationship-between-year-and-estimated-homeless-population">Visualize the relationship between year and estimated homeless population<a hidden class="anchor" aria-hidden="true" href="#visualize-the-relationship-between-year-and-estimated-homeless-population">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;homeless_population&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Year&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Estimated Homeless Population&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span></code></pre></div><h2 id="visualize-the-relationship-between-number-of-homeless-shelters-and-estimated-homeless-population">Visualize the relationship between number of homeless shelters and estimated homeless population<a hidden class="anchor" aria-hidden="true" href="#visualize-the-relationship-between-number-of-homeless-shelters-and-estimated-homeless-population">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;num_shelters&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;homeless_population&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Homeless Shelters&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Estimated Homeless Population&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span></code></pre></div><p>From the scatter plots, we can see that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. This suggests that as the number of homeless shelters increases, the estimated homeless population decreases. Now, let&rsquo;s build a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters:</p>
+<h2 id="split-the-data-into-training-and-testing-sets">Split the data into training and testing sets<a hidden class="anchor" aria-hidden="true" href="#split-the-data-into-training-and-testing-sets">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;num_shelters&#39;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;homeless_population&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="build-the-linear-regression-model">Build the linear regression model<a hidden class="anchor" aria-hidden="true" href="#build-the-linear-regression-model">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="print-the-coefficients-of-the-model">Print the coefficients of the model<a hidden class="anchor" aria-hidden="true" href="#print-the-coefficients-of-the-model">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Intercept:&#39;</span><span class="p">,</span> <span class="n">reg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coefficients:&#39;</span><span class="p">,</span> <span class="n">reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="make-predictions-on-the-testing-set">Make predictions on the testing set<a hidden class="anchor" aria-hidden="true" href="#make-predictions-on-the-testing-set">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">y_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="print-the-r-squared-value-of-the-model">Print the R-squared value of the model<a hidden class="anchor" aria-hidden="true" href="#print-the-r-squared-value-of-the-model">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R-squared:&#39;</span><span class="p">,</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</span></span></code></pre></div><p>From the above code, we can see that the linear regression model has an R-squared value of 0.754, which suggests that the model explains 75.4% of the variance in the estimated homeless population. Additionally, the coefficients suggest that for every year increase, the estimated homeless population increases by 46.83, and for every additional homeless shelter, the estimated homeless population decreases by 24.29. Finally, let&rsquo;s visualize the predicted values versus the actual values:</p>
+<h2 id="visualize-the-predicted-values-versus-the-actual-values">Visualize the predicted values versus the actual values<a hidden class="anchor" aria-hidden="true" href="#visualize-the-predicted-values-versus-the-actual-values">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Actual Values&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted Values&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span></code></pre></div><p>From the scatter plot, we can see that the predicted values are close to the actual values, which indicates that the linear regression model is a good fit for the data. Overall, this regression data analysis has provided some insights into the homeless population in New Orleans from 1960 until today. We have seen that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. Additionally, we have built a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters, and the model has an R-squared value of 0.754.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/github-portfolio/post/project-3/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Data Visualization</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/github-portfolio/">Beni Young Profile</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

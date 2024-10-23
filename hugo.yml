@@ -1,4 +1,4 @@
-baseURL: "https://beni-young.github.io/github-portfolio"
+baseURL: "https://beni-young.github.io/github-portfolio/"
 LanguageCode: en-us
 title: Beni Young Profile
 pagerSize: 5
@@ -12,7 +12,7 @@ buildExpired: false
 #googleAnalytics: UA-123-45
 
 minify:
-  disableXML: true
+  disableXML: false
   minifyOutput: false
 
 params:
