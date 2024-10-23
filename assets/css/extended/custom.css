@@ -11,7 +11,7 @@ img[src$='#center']
 img[src$='#floatleft']
 {
     float: left;
-    margin-right: 1.5rem; 
+    margin-right: 1.9rem; 
     width: 200px;     /* this margin is totally up to you */
     /* whatever else styles you fancy here */
 }
