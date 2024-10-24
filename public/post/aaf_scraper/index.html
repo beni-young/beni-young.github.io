@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Exploratory Data Analysis on Black Directors - The Scraper | Beni Young Profile</title>
+<meta name="keywords" content="">
+<meta name="description" content="Analyzing the Black Directors throughout the years - Part I">
+<meta name="author" content="Me">
+<link rel="canonical" href="http://localhost:1313/post/aaf_scraper/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.83149db0d6fbafb771adc11e76afa182921268ae110ad3fa95a7e3e5116e1082.css" integrity="sha256-gxSdsNb7r7dxrcEedq&#43;hgpISaK4RCtP6lafj5RFuEII=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="apple-touch-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="mask-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/post/aaf_scraper/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Exploratory Data Analysis on Black Directors - The Scraper" />
+<meta property="og:description" content="Analyzing the Black Directors throughout the years - Part I" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/aaf_scraper/" />
+<meta property="og:image" content="http://localhost:1313/images/th-3440962630.jpeg" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-24T16:47:08-04:00" />
+<meta property="article:modified_time" content="2024-10-24T16:47:08-04:00" /><meta property="og:site_name" content="Beni Young Profile" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/images/th-3440962630.jpeg" />
+<meta name="twitter:title" content="Exploratory Data Analysis on Black Directors - The Scraper"/>
+<meta name="twitter:description" content="Analyzing the Black Directors throughout the years - Part I"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Exploratory Data Analysis on Black Directors - The Scraper",
+      "item": "http://localhost:1313/post/aaf_scraper/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Exploratory Data Analysis on Black Directors - The Scraper",
+  "name": "Exploratory Data Analysis on Black Directors - The Scraper",
+  "description": "Analyzing the Black Directors throughout the years - Part I",
+  "keywords": [
+    
+  ],
+  "articleBody": "I was wondering if there has been a progression of Black movies being made since the question why is the oscar so white. I wondered what it would look like to see the black films being made throughout the years. It was hard to say what qualifies as a black movies as there are a significant amount of movies made that targetted a black audience but wasn’t necessarily created by black artist. So I thought if the movies was directed by a black director then it qualifies as a black movies and wanted to see the growth of black directors.\nI needed to find a way to get black film directors into a database to do some analysis, so I figured the best way to get a significant amount of information was throught wikipedia and IMDB.\nThis is where it starts by creating a scraper that is going to be used to find African American Film Directors from combining information from Wikipedia and IMDB\nfrom bs4 import BeautifulSoup from imdb import Cinemagoer import requests import pandas as pd import re import time This creates the Director’s list from both wikipedia pages It is going through each hyperlink on the wikipedia website and adds them to a list. It is broken up into two variables, to make sure to get all the directors from A-Z:\ndirector_links\ndirector_links2\nurl = \"https://en.wikipedia.org/wiki/Category:African-American_film_directors\" url2 = \"https://en.wikipedia.org/w/index.php?title=Category:African-American_film_directors\u0026from=P\" movie_list = set() director_films = set() testing_list = [] names = [] # this will take out names that are organizations and take out the added identifiers at the end of names name_exclude = ['Black women filmmakers', 'Pioneers of African-American Cinema'] name_check = ['film director', 'filmmaker', 'director', 'writer', 'actor', 'musician'] # parsing out the tags def director_page(url): try: result = requests.get(url) result.raise_for_status() doc = BeautifulSoup(result.text, \"html.parser\") except Exception as e: print(e) return doc.find(class_=\"mw-category mw-category-columns\").find_all('a') director_links = director_page(url) director_links2 = director_page(url2) Creates a list of (Director Names, Wikipedia Link) def Directors(names, object): for director in object: if any(y in director.string for y in name_exclude): director.string = '' elif any(x in director.string for x in name_check): director.string = director.string.rsplit('(', 1)[0] if director.string or director.string in names: # LIST: NAME WIKI_LINK names.append([str(director.string.rstrip()), \"https://en.wikipedia.org\" + director['href']]) return names names = Directors(names, director_links) names = Directors(names, director_links2) Creates the Dataframe with Name and Wiki_Link Columns df = pd.DataFrame(names, columns=['Name', 'wiki_link']) df Name wiki_link 0 Abdisalam Aato https://en.wikipedia.org/wiki/Abdisalam_Aato 1 Gay Abel-Bey https://en.wikipedia.org/wiki/Gay_Abel-Bey 2 Fathia Absie https://en.wikipedia.org/wiki/Fathia_Absie 3 Anita W. Addison https://en.wikipedia.org/wiki/Anita_W._Addison 4 Omowale Akintunde https://en.wikipedia.org/wiki/Omowale_Akintunde ... ... ... 313 Tricia Woodgett https://en.wikipedia.org/wiki/Tricia_Woodgett 314 Bille Woodruff https://en.wikipedia.org/wiki/Bille_Woodruff 315 Fronza Woods https://en.wikipedia.org/wiki/Fronza_Woods 316 Tanya Wright https://en.wikipedia.org/wiki/Tanya_Wright 317 Phillip Youmans https://en.wikipedia.org/wiki/Phillip_Youmans 318 rows × 2 columns\nSaves the Dataframe as a csv file df.to_csv(\"director_names.csv\") print(len(names)) 318 This is set up for getting Filmography from Director’s Wikipedia page It first opens up each wikipedia page of the director and checks to see what type of Filmography section or if it has one at all. Then depending on what type it finds. It will get the list of movies and the year it was released. In the end, it will create a list with the “Movie, Year, Wikipedia” which will be used to identify a director on IMDB director_films = set() test = [] mxm = [] #The range is performed in set of 50 to avoid timeout issues and to test if the data is pulled #the total range is 311 which is the len(names) for i in range(0, len(names)-1): #for i in range(0, 300): #add a wait time of 5 seconds so there isn't a timeout if i % 50 == 0: time.sleep(5) wiki_url = \"https://en.wikipedia.org\" + str(df.loc[i].at['wiki_link']) table_check = False try: result = requests.get(wiki_url) result.raise_for_status() doc = BeautifulSoup(result.text, \"html.parser\") except Exception as e: print(e) if doc.find(id=\"Filmography\") and doc.find(class_=\"wikitable\"): if doc.find(id=\"Filmography\").parent.find_next(\"th\").find_next(\"th\").text.rstrip() == \"Title\" or \\ doc.find(id=\"Filmography\").parent.find_next(\"th\").find_next(\"th\").text.rstrip() == \"Film\": film_list = doc.find(id=\"Filmography\").parent.find_next(\"th\").find_all_next(\"tr\", limit=6) table_check = True else: film_list = doc.find(id=\"Filmography\").parent.find_all_next(\"li\", limit=6) elif doc.find(id=\"Films\") and doc.find(class_=\"wikitable\"): if doc.find(id=\"Films\").parent.find_next(\"th\").find_next(\"th\").text.rstrip() == \"Film\": film_list = doc.find(id=\"Films\").parent.find_next(\"th\").find_all_next(\"tr\", limit=6) table_check = True else: film_list = doc.find(id=\"Films\").parent.find_all_next(\"li\", limit=6) elif doc.find(id=\"Filmography\"): film_list = doc.find(id=\"Filmography\").parent.find_all_next(\"li\", limit=6) elif doc.find(id=\"Films_2\"): film_list = doc.find(id=\"Films_2\").parent.find_all_next(\"li\", limit=6) elif (doc.find(id=\"Films\") or doc.find(id=\"Film\")) and doc.find(class_=\"mw-headline\"): if doc.find(id=\"Films\"): film_list = doc.find(id=\"Films\").parent.find_all_next(\"li\", limit=6) else: film_list = doc.find(id=\"Film\").parent.find_all_next(\"li\", limit=6) elif (doc.find(id=\"Selected_filmography\") or doc.find(id=\"Select_Filmography\")) and doc.find(class_=\"mw-headline\"): if doc.find(id=\"Selected_filmography\"): film_list = doc.find(id=\"Selected_filmography\").parent.find_all_next(\"li\", limit=6) else: film_list = doc.find(id=\"Select_Filmography\").parent.find_all_next(\"li\", limit=6) elif doc.find(id=\"Filmography_as_director\") and doc.find(class_=\"mw-headline\"): film_list = doc.find(id=\"Filmography_as_director\").parent.find_all_next(\"li\", limit=6) else: #print(\"Couldn't find one for \", wiki_url) continue for film in film_list: #Filmography Section has a Film Table: Year Movie and table check is used since it changes the format if table_check == True: if re.search('\\d\\d\\d\\d', film.text): s = film.text.rsplit('\\n\\n') if len(s) \u003e= 2: t = [s[1].strip(), s[0].lstrip(), wiki_url] else: s[0] = s[0].strip() s[0] = re.sub('\\[\\d+\\]',\"\", s[0]) s = s[0].split('\\n') t = [s[1].strip(), s[0].strip(), wiki_url] if re.search('\\n', t[1]): t = t[1].split('\\n') t = [t[1], t[0], wiki_url] director_films.add(tuple(t)) #Filmography Section has Number Movie (year) format elif film.text[:1].isdigit() and re.search('\\(\\d\\d\\d\\d\\)', film.text): film = film.text.rsplit(r')', 1)[0] film = film.replace('(', ' ', 1) director_films.add((film[:-6].strip(), film[-4:].strip(), wiki_url)) #Filmography Section has Movie (year) format elif ')' in film: film = film.text.rsplit(r' ', 1)[0] film = film.replace('(', ' ', 1) director_films.add((film[:-6].strip(), film[-4:].strip(), wiki_url)) #Filmography Section has Year Movie format elif film.text[:1].isdigit(): s = film.text.rsplit('(', 1)[0] s = s.split(\":\") if len(s) \u003e= 2: director_films.add((s[1].strip(), s[0].strip(), wiki_url)) else: continue #print( \"WILL TRY TO FIX LATER OR IGNORE: \", film.text) #Filmography Section has Movie year format else: bird = film.text.split(' (', 1) tweet = re.search('\\d\\d\\d\\d', film.text) try: tweet = str(tweet.group()) except: tweet = \"0000\" mxm = bird[0].strip(), tweet.strip(), wiki_url director_films.add(tuple(mxm)) #print(director_films) This searches through people and tries to match person to Director via Movies It then adds all the movies of a director to a Movie List dfMovies = pd.DataFrame(columns=['Movie_ID', 'Title', 'Year', 'Person_ID', 'Name']) rawdf = pd.DataFrame(director_films) rawdf.to_csv('raw_movie_wikipedia.csv') ia = Cinemagoer() person_id = [] found = False #range is from 0 - length of directors: Only sections of the search at a time to avoid timeout issues # so it will sleep for 5 seconds every 50 searches done for i in range(0, len(names)): #add a wait time of 5 seconds so there isn't a timeout if i % 50 == 0 and i \u003e 0: print(i) time.sleep(5) people = ia.search_person(names[i][0]) found = False for person in people: if found == False: #print(person['name']) works = ia.get_person(people[0].personID) #print (works['filmography'].keys()) if works.has_key('director'): for job in works['filmography'].keys(): if job == 'director': #print('Person ID:', person.personID, '\\tDirector:', person['name'], '\\t# Job:', job, ) for movie in works['filmography'][job]: #print(movie, \" \", movie.get('year')) if next((i for i, v in enumerate(director_films) if v[0] == movie['title'] and v[1] == str(movie.get('year'))), None) and found == False: #print(\"test 1:\", '\\tID:%s Title:%s Year: %s' % (movie.movieID, movie['title'], movie['year'])) found = True for m in works['filmography'][job]: year = 0000 if 'year' not in m else int(m['year']) #print(m['title'],'\\t', m['year']) dfMovies.loc[len(dfMovies.index)] = [m.movieID, m['title'], year, person.personID, person['name']] elif next((i for i, v in enumerate(director_films) if v[0] == movie['title']), None) and found == False: #print (\"test 2:\", '\\tID:%s Title:%s Year: %s' % (movie.movieID, movie['title'], movie['year']) ) found = True for m in works['filmography'][job]: year = 0000 if 'year' not in m else int(m['year']) #print(m['title'],'\\t', m['year']) dfMovies.loc[len(dfMovies.index)] = [m.movieID, m['title'], year, person.personID, person['name']] else: continue #print('Person ID:', person.personID, '\\tName: ', person['name'], '\\t# Job:', job, \"(Doesn't have a filmography)\") 50 100 150 200 250 300 dfMovies.to_csv(\"imdb_movies_directors.csv\") ",
+  "wordCount" : "1195",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/images/th-3440962630.jpeg","datePublished": "2024-10-24T16:47:08-04:00",
+  "dateModified": "2024-10-24T16:47:08-04:00",
+  "author":{
+    "@type": "Person",
+    "name": "Me"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/post/aaf_scraper/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Beni Young Profile",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/%3Clink%20/%20abs%20url%3E"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
+                <img src="http://localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
+                    height="35">andronicus.cc</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/post/" title="Post">
+                    <span>Post</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/beni-young-0531a3235/" title="Linkedin">
+                    <span>Linkedin</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/beni-young" title="Github">
+                    <span>Github</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Exploratory Data Analysis on Black Directors - The Scraper
+    </h1>
+    <div class="post-description">
+      Analyzing the Black Directors throughout the years - Part I
+    </div>
+    <div class="post-meta"><span title='2024-10-24 16:47:08 -0400 -0400'>October 24, 2024</span>&nbsp;·&nbsp;Me
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/images/th-3440962630.jpeg" alt="">
+        
+</figure>
+  <div class="post-content"><p>I was wondering if there has been a progression of Black movies being made since the question why is the oscar so white. I wondered what it would look like to see the black films being made throughout the years. It was hard to say what qualifies as a black movies as there are a significant amount of movies made that targetted a black audience but wasn&rsquo;t necessarily created by black artist. So I thought if the movies was directed by a black director then it qualifies as a black movies and wanted to see the growth of black directors.</p>
+<p>I needed to find a way to get black film directors into a database to do some analysis, so I figured the best way to get a significant amount of information was throught wikipedia and IMDB.</p>
+<p>This is where it starts by creating a scraper that is going to be used to find African American Film Directors from combining information from Wikipedia and IMDB</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">imdb</span> <span class="kn">import</span> <span class="n">Cinemagoer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span></code></pre></div><h2 id="this-creates-the-directors-list-from-both-wikipedia-pages">This creates the Director&rsquo;s list from both wikipedia pages<a hidden class="anchor" aria-hidden="true" href="#this-creates-the-directors-list-from-both-wikipedia-pages">#</a></h2>
+<p>It is going through each hyperlink on the wikipedia website and adds them to a list. It is broken up into two variables, to make sure to get all the directors from A-Z:<br />
+director_links<br />
+director_links2</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://en.wikipedia.org/wiki/Category:African-American_film_directors&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">url2</span> <span class="o">=</span> <span class="s2">&#34;https://en.wikipedia.org/w/index.php?title=Category:African-American_film_directors&amp;from=P&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">movie_list</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">director_films</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">testing_list</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># this will take out names that are organizations and take out the added identifiers at the end of names</span>
+</span></span><span class="line"><span class="cl"><span class="n">name_exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Black women filmmakers&#39;</span><span class="p">,</span> <span class="s1">&#39;Pioneers of African-American Cinema&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">name_check</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;film director&#39;</span><span class="p">,</span> <span class="s1">&#39;filmmaker&#39;</span><span class="p">,</span> <span class="s1">&#39;director&#39;</span><span class="p">,</span> <span class="s1">&#39;writer&#39;</span><span class="p">,</span> <span class="s1">&#39;actor&#39;</span><span class="p">,</span> <span class="s1">&#39;musician&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># parsing out the &lt;a&gt; tags </span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">director_page</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">doc</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&#34;html.parser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;mw-category mw-category-columns&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">director_links</span> <span class="o">=</span> <span class="n">director_page</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">director_links2</span> <span class="o">=</span> <span class="n">director_page</span><span class="p">(</span><span class="n">url2</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="creates-a-list-of-director-names-wikipedia-link">Creates a list of (Director Names, Wikipedia Link)<a hidden class="anchor" aria-hidden="true" href="#creates-a-list-of-director-names-wikipedia-link">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">Directors</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">director</span> <span class="ow">in</span> <span class="nb">object</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">y</span> <span class="ow">in</span> <span class="n">director</span><span class="o">.</span><span class="n">string</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">name_exclude</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">director</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="ow">in</span> <span class="n">director</span><span class="o">.</span><span class="n">string</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">name_check</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">director</span><span class="o">.</span><span class="n">string</span>  <span class="o">=</span> <span class="n">director</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">director</span><span class="o">.</span><span class="n">string</span> <span class="ow">or</span> <span class="n">director</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">            <span class="c1">#         LIST:    NAME                       WIKI_LINK</span>
+</span></span><span class="line"><span class="cl">            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">director</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()),</span> <span class="s2">&#34;https://en.wikipedia.org&#34;</span> <span class="o">+</span> <span class="n">director</span><span class="p">[</span><span class="s1">&#39;href&#39;</span><span class="p">]])</span>        
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">names</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">names</span> <span class="o">=</span> <span class="n">Directors</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">director_links</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">names</span> <span class="o">=</span> <span class="n">Directors</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">director_links2</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="creates-the-dataframe-with-name-and-wiki_link-columns">Creates the Dataframe with Name and Wiki_Link Columns<a hidden class="anchor" aria-hidden="true" href="#creates-the-dataframe-with-name-and-wiki_link-columns">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;wiki_link&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>wiki_link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abdisalam Aato</td>
+      <td>https://en.wikipedia.org/wiki/Abdisalam_Aato</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Gay Abel-Bey</td>
+      <td>https://en.wikipedia.org/wiki/Gay_Abel-Bey</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Fathia Absie</td>
+      <td>https://en.wikipedia.org/wiki/Fathia_Absie</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Anita W. Addison</td>
+      <td>https://en.wikipedia.org/wiki/Anita_W._Addison</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Omowale Akintunde</td>
+      <td>https://en.wikipedia.org/wiki/Omowale_Akintunde</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>313</th>
+      <td>Tricia Woodgett</td>
+      <td>https://en.wikipedia.org/wiki/Tricia_Woodgett</td>
+    </tr>
+    <tr>
+      <th>314</th>
+      <td>Bille Woodruff</td>
+      <td>https://en.wikipedia.org/wiki/Bille_Woodruff</td>
+    </tr>
+    <tr>
+      <th>315</th>
+      <td>Fronza Woods</td>
+      <td>https://en.wikipedia.org/wiki/Fronza_Woods</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>Tanya Wright</td>
+      <td>https://en.wikipedia.org/wiki/Tanya_Wright</td>
+    </tr>
+    <tr>
+      <th>317</th>
+      <td>Phillip Youmans</td>
+      <td>https://en.wikipedia.org/wiki/Phillip_Youmans</td>
+    </tr>
+  </tbody>
+</table>
+<p>318 rows × 2 columns</p>
+</div>
+<h3 id="saves-the-dataframe-as-a-csv-file">Saves the Dataframe as a csv file<a hidden class="anchor" aria-hidden="true" href="#saves-the-dataframe-as-a-csv-file">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;director_names.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))</span>
+</span></span></code></pre></div><pre><code>318
+</code></pre>
+<h3 id="this-is-set-up-for-getting-filmography-from-directors-wikipedia-page">This is set up for getting Filmography from Director&rsquo;s Wikipedia page<a hidden class="anchor" aria-hidden="true" href="#this-is-set-up-for-getting-filmography-from-directors-wikipedia-page">#</a></h3>
+<ul>
+<li>It first opens up each wikipedia page of the director and checks to see what type of Filmography section or if it has one at all.</li>
+<li>Then depending on what type it finds. It will get the list of movies and the year it was released.</li>
+<li>In the end, it will create a list with the &ldquo;Movie, Year, Wikipedia&rdquo; which will be used to identify a director on IMDB</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">director_films</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">test</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">mxm</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#The range is performed in set of 50 to avoid timeout issues and to test if the data is pulled</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#the total range is 311 which is the len(names)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span> 
+</span></span><span class="line"><span class="cl"><span class="c1">#for i in range(0, 300): </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">#add a wait time of 5 seconds so there isn&#39;t a timeout</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">wiki_url</span> <span class="o">=</span> <span class="s2">&#34;https://en.wikipedia.org&#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="s1">&#39;wiki_link&#39;</span><span class="p">])</span>      
+</span></span><span class="line"><span class="cl">    <span class="n">table_check</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">wiki_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">doc</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&#34;html.parser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;wikitable&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;Title&#34;</span> <span class="ow">or</span> \
+</span></span><span class="line"><span class="cl">           <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;Film&#34;</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>        
+</span></span><span class="line"><span class="cl">            <span class="n">table_check</span> <span class="o">=</span> <span class="kc">True</span>                  
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;wikitable&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&#34;Film&#34;</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&#34;th&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;tr&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>        
+</span></span><span class="line"><span class="cl">            <span class="n">table_check</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films_2&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films_2&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Film&#34;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;mw-headline&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Films&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>            
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Film&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Selected_filmography&#34;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Select_Filmography&#34;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;mw-headline&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Selected_filmography&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Selected_filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Select_Filmography&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography_as_director&#34;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="s2">&#34;mw-headline&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">film_list</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s2">&#34;Filmography_as_director&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_all_next</span><span class="p">(</span><span class="s2">&#34;li&#34;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#print(&#34;Couldn&#39;t find one for &#34;, wiki_url)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">film</span> <span class="ow">in</span> <span class="n">film_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">#Filmography Section has a Film Table: Year Movie and table check is used since it changes the format</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">table_check</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>            
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;\d\d\d\d&#39;</span><span class="p">,</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="n">s</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(),</span> <span class="n">wiki_url</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\[\d+\]&#39;</span><span class="p">,</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>                         
+</span></span><span class="line"><span class="cl">                    <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">wiki_url</span><span class="p">]</span>                         
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">wiki_url</span><span class="p">]</span>                
+</span></span><span class="line"><span class="cl">                <span class="n">director_films</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>                     
+</span></span><span class="line"><span class="cl">        <span class="c1">#Filmography Section has Number Movie (year) format</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;\(\d\d\d\d\)&#39;</span><span class="p">,</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">director_films</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">film</span><span class="p">[:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">film</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">wiki_url</span><span class="p">))</span>            
+</span></span><span class="line"><span class="cl">        <span class="c1">#Filmography Section has Movie (year) format</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span>  <span class="s1">&#39;)&#39;</span> <span class="ow">in</span> <span class="n">film</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">film</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">director_films</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">film</span><span class="p">[:</span><span class="o">-</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">film</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">wiki_url</span><span class="p">))</span>            
+</span></span><span class="line"><span class="cl">        <span class="c1">#Filmography Section has Year Movie format</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;:&#34;</span><span class="p">)</span>            
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>           
+</span></span><span class="line"><span class="cl">                <span class="n">director_films</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">wiki_url</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span> <span class="c1">#print( &#34;WILL TRY TO FIX LATER OR IGNORE: &#34;, film.text)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#Filmography Section has Movie year format</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bird</span> <span class="o">=</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; (&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tweet</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;\d\d\d\d&#39;</span><span class="p">,</span> <span class="n">film</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>            
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tweet</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tweet</span> <span class="o">=</span> <span class="s2">&#34;0000&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mxm</span> <span class="o">=</span> <span class="n">bird</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">tweet</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">wiki_url</span>            
+</span></span><span class="line"><span class="cl">            <span class="n">director_films</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">mxm</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#print(director_films)</span>
+</span></span></code></pre></div><h4 id="this-searches-through-people-and-tries-to-match-person-to-director-via-movies">This searches through people and tries to match person to Director via Movies<a hidden class="anchor" aria-hidden="true" href="#this-searches-through-people-and-tries-to-match-person-to-director-via-movies">#</a></h4>
+<h4 id="it-then-adds-all-the-movies-of-a-director-to-a-movie-list">It then adds all the movies of a director to a Movie List<a hidden class="anchor" aria-hidden="true" href="#it-then-adds-all-the-movies-of-a-director-to-a-movie-list">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dfMovies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Movie_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_ID&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">])</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">rawdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">director_films</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">rawdf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;raw_movie_wikipedia.csv&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">ia</span> <span class="o">=</span> <span class="n">Cinemagoer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">person_id</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#range is from 0 - length of directors: Only sections of the search at a time to avoid timeout issues</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># so it will sleep for 5 seconds every 50 searches done</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)):</span> 
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">#add a wait time of 5 seconds so there isn&#39;t a timeout</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">people</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">search_person</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">found</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#print(person[&#39;name&#39;])        </span>
+</span></span><span class="line"><span class="cl">            <span class="n">works</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="n">people</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">personID</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#print (works[&#39;filmography&#39;].keys())</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">works</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;director&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">works</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">job</span> <span class="o">==</span> <span class="s1">&#39;director&#39;</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">                        <span class="c1">#print(&#39;Person ID:&#39;, person.personID, &#39;\tDirector:&#39;, person[&#39;name&#39;], &#39;\t# Job:&#39;, job, )</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">for</span> <span class="n">movie</span> <span class="ow">in</span> <span class="n">works</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">][</span><span class="n">job</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">#print(movie, &#34; &#34;, movie.get(&#39;year&#39;))                        </span>
+</span></span><span class="line"><span class="cl">                            <span class="k">if</span> <span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">director_films</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">movie</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">))),</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">found</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>                             
+</span></span><span class="line"><span class="cl">                                <span class="c1">#print(&#34;test 1:&#34;, &#39;\tID:%s Title:%s Year: %s&#39; % (movie.movieID, movie[&#39;title&#39;], movie[&#39;year&#39;]))  </span>
+</span></span><span class="line"><span class="cl">                                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>                                                           
+</span></span><span class="line"><span class="cl">                                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">works</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">][</span><span class="n">job</span><span class="p">]:</span>            
+</span></span><span class="line"><span class="cl">                                    <span class="n">year</span> <span class="o">=</span> <span class="mi">0000</span> <span class="k">if</span> <span class="s1">&#39;year&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">m</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                                    <span class="c1">#print(m[&#39;title&#39;],&#39;\t&#39;, m[&#39;year&#39;])</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">dfMovies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfMovies</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">movieID</span><span class="p">,</span> <span class="n">m</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span> <span class="n">year</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">personID</span><span class="p">,</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> 
+</span></span><span class="line"><span class="cl">                            <span class="k">elif</span> <span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">director_films</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">movie</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]),</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">found</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">#print (&#34;test 2:&#34;, &#39;\tID:%s Title:%s Year: %s&#39; % (movie.movieID, movie[&#39;title&#39;], movie[&#39;year&#39;]) )</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>                                  
+</span></span><span class="line"><span class="cl">                                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">works</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">][</span><span class="n">job</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">year</span> <span class="o">=</span> <span class="mi">0000</span> <span class="k">if</span> <span class="s1">&#39;year&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">m</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                                    <span class="c1">#print(m[&#39;title&#39;],&#39;\t&#39;, m[&#39;year&#39;])</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">dfMovies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">dfMovies</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">movieID</span><span class="p">,</span> <span class="n">m</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span> <span class="n">year</span><span class="p">,</span> <span class="n">person</span><span class="o">.</span><span class="n">personID</span><span class="p">,</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span>                            
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span> <span class="c1">#print(&#39;Person ID:&#39;, person.personID, &#39;\tName:    &#39;, person[&#39;name&#39;], &#39;\t# Job:&#39;, job, &#34;(Doesn&#39;t have a filmography)&#34;)</span>
+</span></span></code></pre></div><pre><code>50
+100
+150
+200
+250
+300
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dfMovies</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;imdb_movies_directors.csv&#34;</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/post/uber-data-analytics/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Uber Data Analytics</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">Beni Young Profile</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

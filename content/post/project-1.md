@@ -6,6 +6,7 @@ title: "Exploratory Data Analysis on Black Directors"
 #weight: 1
 cover:
   image: "images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp"
+  draft: true
 ---
 
 For this exploratory data analysis, I will be using a dataset of black directors from 1914 until today that I found on Kaggle. The dataset contains information on black directors, such as their name, gender, birth year, birthplace, and more. Before we start analyzing the data, let's import the necessary libraries and load the dataset:

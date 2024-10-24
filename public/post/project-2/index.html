@@ -9,16 +9,16 @@
 <meta name="keywords" content="">
 <meta name="description" content="New Orleans Homeless Population">
 <meta name="author" content="Me">
-<link rel="canonical" href="//localhost:1313/post/project-2/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.864415fa68d3f7afd0d6c9b757f320bfbc503ef19c55c3e61b5f61f35987b682.css" integrity="sha256-hkQV&#43;mjT96/Q1sm3V/Mgv7xQPvGcVcPmG19h81mHtoI=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="apple-touch-icon" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="mask-icon" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="canonical" href="http://localhost:1313/post/project-2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.83149db0d6fbafb771adc11e76afa182921268ae110ad3fa95a7e3e5116e1082.css" integrity="sha256-gxSdsNb7r7dxrcEedq&#43;hgpISaK4RCtP6lafj5RFuEII=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="apple-touch-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="mask-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/post/project-2/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/post/project-2/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,13 +58,13 @@
 </noscript><meta property="og:title" content="Regression Data Analysis of New Orleans Homeless Population" />
 <meta property="og:description" content="New Orleans Homeless Population" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="//localhost:1313/post/project-2/" />
-<meta property="og:image" content="//localhost:1313/images/22158864631_8f5ec40372_k.jpg" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://localhost:1313/post/project-2/" />
+<meta property="og:image" content="http://localhost:1313/images/22158864631_8f5ec40372_k.jpg" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-05-10T11:00:59-04:00" />
 <meta property="article:modified_time" content="2023-05-10T11:00:59-04:00" /><meta property="og:site_name" content="Beni Young Profile" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="//localhost:1313/images/22158864631_8f5ec40372_k.jpg" />
+<meta name="twitter:image" content="http://localhost:1313/images/22158864631_8f5ec40372_k.jpg" />
 <meta name="twitter:title" content="Regression Data Analysis of New Orleans Homeless Population"/>
 <meta name="twitter:description" content="New Orleans Homeless Population"/>
 
@@ -78,13 +78,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "//localhost:1313/post/"
+      "item": "http://localhost:1313/post/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Regression Data Analysis of New Orleans Homeless Population",
-      "item": "//localhost:1313/post/project-2/"
+      "item": "http://localhost:1313/post/project-2/"
     }
   ]
 }
@@ -102,7 +102,7 @@
   "articleBody": "For this regression data analysis, I will be using a dataset of homeless population in New Orleans from 1960 until today. The dataset contains information on the year, the estimated homeless population, and the number of homeless shelters in the city. Before we start analyzing the data, let’s import the necessary libraries and load the dataset:\nimport pandas as pd import numpy as np import matplotlib.pyplot as plt import seaborn as sns Load the dataset df = pd.read_csv('homeless_population.csv') Print the first 5 rows of the dataset print(df.head()) Now that we have loaded the dataset, let’s explore it further: Print the shape of the dataset print(df.shape) Print the summary statistics of the dataset print(df.describe()) Print the data types of the columns print(df.dtypes) Print the number of null values in each column print(df.isnull().sum()) From the above code, we can see that the dataset contains 61 rows and 3 columns. The summary statistics show that the estimated homeless population ranges from 0 to 8857, and the number of homeless shelters ranges from 0 to 68. There are no null values in the dataset. Now, let’s visualize some of the data using scatter plots:\nVisualize the relationship between year and estimated homeless population sns.scatterplot(x='year', y='homeless_population', data=df) plt.xlabel('Year') plt.ylabel('Estimated Homeless Population') plt.show() Visualize the relationship between number of homeless shelters and estimated homeless population sns.scatterplot(x='num_shelters', y='homeless_population', data=df) plt.xlabel('Number of Homeless Shelters') plt.ylabel('Estimated Homeless Population') plt.show() From the scatter plots, we can see that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. This suggests that as the number of homeless shelters increases, the estimated homeless population decreases. Now, let’s build a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters:\nSplit the data into training and testing sets from sklearn.model_selection import train_test_split X = df[['year', 'num_shelters']] y = df['homeless_population'] X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) Build the linear regression model from sklearn.linear_model import LinearRegression reg = LinearRegression() reg.fit(X_train, y_train) Print the coefficients of the model print('Intercept:', reg.intercept_) print('Coefficients:', reg.coef_) Make predictions on the testing set y_pred = reg.predict(X_test) Print the R-squared value of the model from sklearn.metrics import r2_score print('R-squared:', r2_score(y_test, y_pred)) From the above code, we can see that the linear regression model has an R-squared value of 0.754, which suggests that the model explains 75.4% of the variance in the estimated homeless population. Additionally, the coefficients suggest that for every year increase, the estimated homeless population increases by 46.83, and for every additional homeless shelter, the estimated homeless population decreases by 24.29. Finally, let’s visualize the predicted values versus the actual values:\nVisualize the predicted values versus the actual values sns.scatterplot(x=y_test, y=y_pred) plt.xlabel('Actual Values') plt.ylabel('Predicted Values') plt.show() From the scatter plot, we can see that the predicted values are close to the actual values, which indicates that the linear regression model is a good fit for the data. Overall, this regression data analysis has provided some insights into the homeless population in New Orleans from 1960 until today. We have seen that there is a positive relationship between year and estimated homeless population, and a negative relationship between the number of homeless shelters and estimated homeless population. Additionally, we have built a linear regression model to predict the estimated homeless population based on the year and the number of homeless shelters, and the model has an R-squared value of 0.754.\n",
   "wordCount" : "576",
   "inLanguage": "en",
-  "image":"//localhost:1313/images/22158864631_8f5ec40372_k.jpg","datePublished": "2023-05-10T11:00:59-04:00",
+  "image":"http://localhost:1313/images/22158864631_8f5ec40372_k.jpg","datePublished": "2023-05-10T11:00:59-04:00",
   "dateModified": "2023-05-10T11:00:59-04:00",
   "author":{
     "@type": "Person",
@@ -110,14 +110,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "//localhost:1313/post/project-2/"
+    "@id": "http://localhost:1313/post/project-2/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Beni Young Profile",
     "logo": {
       "@type": "ImageObject",
-      "url": "//localhost:1313/%3Clink%20/%20abs%20url%3E"
+      "url": "http://localhost:1313/%3Clink%20/%20abs%20url%3E"
     }
   }
 }
@@ -139,8 +139,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
-                <img src="//localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
+            <a href="http://localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
+                <img src="http://localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
                     height="35">andronicus.cc</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -167,17 +167,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/resume/" title="Resume">
+                <a href="http://localhost:1313/resume/" title="Resume">
                     <span>Resume</span>
                 </a>
             </li>
             <li>
-                <a href="//localhost:1313/post/" title="Post">
+                <a href="http://localhost:1313/post/" title="Post">
                     <span>Post</span>
                 </a>
             </li>
             <li>
-                <a href="//localhost:1313/archives/" title="Archives">
+                <a href="http://localhost:1313/archives/" title="Archives">
                     <span>Archives</span>
                 </a>
             </li>
@@ -210,7 +210,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/post/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/post/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Regression Data Analysis of New Orleans Homeless Population
     </h1>
@@ -221,7 +221,7 @@
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="//localhost:1313/images/22158864631_8f5ec40372_k.jpg" alt="">
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/images/22158864631_8f5ec40372_k.jpg" alt="">
         
 </figure>
   <div class="post-content"><p>For this regression data analysis, I will be using a dataset of homeless population in New Orleans from 1960 until today. The dataset contains information on the year, the estimated homeless population, and the number of homeless shelters in the city. Before we start analyzing the data, let&rsquo;s import the necessary libraries and load the dataset:</p>
@@ -286,7 +286,7 @@
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/post/project-3/">
+  <a class="prev" href="http://localhost:1313/post/project-3/">
     <span class="title">« Prev</span>
     <br>
     <span>Data Visualization</span>
@@ -298,7 +298,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="//localhost:1313/">Beni Young Profile</a></span> · 
+        <span>&copy; 2024 <a href="http://localhost:1313/">Beni Young Profile</a></span> · 
 
     <span>
         Powered by

@@ -9,16 +9,16 @@
 <meta name="keywords" content="">
 <meta name="description" content="A tool that looks at Black Directors">
 <meta name="author" content="Me">
-<link rel="canonical" href="//localhost:1313/post/project-1/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.864415fa68d3f7afd0d6c9b757f320bfbc503ef19c55c3e61b5f61f35987b682.css" integrity="sha256-hkQV&#43;mjT96/Q1sm3V/Mgv7xQPvGcVcPmG19h81mHtoI=" rel="preload stylesheet" as="style">
-<link rel="icon" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="apple-touch-icon" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
-<link rel="mask-icon" href="//localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="canonical" href="http://localhost:1313/post/project-1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.83149db0d6fbafb771adc11e76afa182921268ae110ad3fa95a7e3e5116e1082.css" integrity="sha256-gxSdsNb7r7dxrcEedq&#43;hgpISaK4RCtP6lafj5RFuEII=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="apple-touch-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="mask-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="//localhost:1313/post/project-1/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/post/project-1/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,13 +58,13 @@
 </noscript><meta property="og:title" content="Exploratory Data Analysis on Black Directors" />
 <meta property="og:description" content="A tool that looks at Black Directors" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="//localhost:1313/post/project-1/" />
-<meta property="og:image" content="//localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp" /><meta property="article:section" content="post" />
+<meta property="og:url" content="http://localhost:1313/post/project-1/" />
+<meta property="og:image" content="http://localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-05-27T10:58:08-04:00" />
 <meta property="article:modified_time" content="2023-05-27T10:58:08-04:00" /><meta property="og:site_name" content="Beni Young Profile" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="//localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp" />
+<meta name="twitter:image" content="http://localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp" />
 <meta name="twitter:title" content="Exploratory Data Analysis on Black Directors"/>
 <meta name="twitter:description" content="A tool that looks at Black Directors"/>
 
@@ -78,13 +78,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "//localhost:1313/post/"
+      "item": "http://localhost:1313/post/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Exploratory Data Analysis on Black Directors",
-      "item": "//localhost:1313/post/project-1/"
+      "item": "http://localhost:1313/post/project-1/"
     }
   ]
 }
@@ -102,7 +102,7 @@
   "articleBody": "For this exploratory data analysis, I will be using a dataset of black directors from 1914 until today that I found on Kaggle. The dataset contains information on black directors, such as their name, gender, birth year, birthplace, and more. Before we start analyzing the data, let’s import the necessary libraries and load the dataset:\nImport the following Python Libraries import pandas as pd import matplotlib.pyplot as plt import seaborn as sns Load the dataset df = pd.read_csv('black_directors.csv')\nPrint the first 5 rows of the dataset print(df.head())\nNow that we have loaded the dataset, let’s explore it further:\nPrint the shape of the dataset print(df.shape)\nPrint the summary statistics of the dataset print(df.describe())\nPrint the data types of the columns print(df.dtypes)\nPrint the number of null values in each column print(df.isnull().sum())\nFrom the above code, we can see that the dataset contains 366 rows and 16 columns. The summary statistics show that the birth year ranges from 1880 to 1992, and the number of films ranges from 1 to 48. There are no null values in the dataset. Now, let’s visualize some of the data using histograms, box plots, and scatter plots:\nVisualize the distribution of birth years plt.hist(df['birth_year'], bins=20) plt.xlabel('Birth Year') plt.ylabel('Count') plt.show() Visualize the distribution of the number of films sns.boxplot(x='num_films', data=df) plt.xlabel('Number of Films') plt.show() Visualize the relationship between birth year and number of films sns.scatterplot(x='birth_year', y='num_films', data=df) plt.xlabel('Birth Year') plt.ylabel('Number of Films') plt.show() From the histograms, we can see that the majority of black directors were born between the 1940s and the 1960s. From the box plot, we can see that the median number of films directed by black directors is around 2. From the scatter plot, we can see that there is no clear relationship between birth year and number of films. Finally, let’s explore the data further by looking at the top 10 black directors with the most number of films:\nGet the top 10 black directors with the most number of films top_directors = df.sort_values(by='num_films', ascending=False).head(10) Visualize the top 10 black directors with the most number of films sns.barplot(x='num_films', y='name', data=top_directors) plt.xlabel('Number of Films') plt.ylabel('Director Name') plt.show() From the bar plot, we can see that the top 3 black directors with the most number of films are Spike Lee, Tyler Perry, and Johnnie Toomer. Overall, this exploratory data analysis has provided some insights into the black directors from 1914 until today. We have seen that the majority of black directors were born between the 1940s and the 1960s, and the median number of films directed by black directors is around 2. Additionally, we have identified the top 10 black directors with the most number of films, with Spike Lee, Tyler Perry, and Johnnie Toomer being the top 3.\n",
   "wordCount" : "455",
   "inLanguage": "en",
-  "image":"//localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp","datePublished": "2023-05-27T10:58:08-04:00",
+  "image":"http://localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp","datePublished": "2023-05-27T10:58:08-04:00",
   "dateModified": "2023-05-27T10:58:08-04:00",
   "author":{
     "@type": "Person",
@@ -110,14 +110,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "//localhost:1313/post/project-1/"
+    "@id": "http://localhost:1313/post/project-1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Beni Young Profile",
     "logo": {
       "@type": "ImageObject",
-      "url": "//localhost:1313/%3Clink%20/%20abs%20url%3E"
+      "url": "http://localhost:1313/%3Clink%20/%20abs%20url%3E"
     }
   }
 }
@@ -139,8 +139,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="//localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
-                <img src="//localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
+            <a href="http://localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
+                <img src="http://localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
                     height="35">andronicus.cc</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
@@ -167,17 +167,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="//localhost:1313/resume/" title="Resume">
+                <a href="http://localhost:1313/resume/" title="Resume">
                     <span>Resume</span>
                 </a>
             </li>
             <li>
-                <a href="//localhost:1313/post/" title="Post">
+                <a href="http://localhost:1313/post/" title="Post">
                     <span>Post</span>
                 </a>
             </li>
             <li>
-                <a href="//localhost:1313/archives/" title="Archives">
+                <a href="http://localhost:1313/archives/" title="Archives">
                     <span>Archives</span>
                 </a>
             </li>
@@ -210,7 +210,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="//localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="//localhost:1313/post/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/post/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Exploratory Data Analysis on Black Directors
     </h1>
@@ -221,7 +221,7 @@
 
 </div>
   </header> 
-<figure class="entry-cover"><img loading="eager" src="//localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp" alt="">
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/images/5AAZ56276FF3ZOBLEAVA4DA6PQ.webp" alt="">
         
 </figure>
   <div class="post-content"><p>For this exploratory data analysis, I will be using a dataset of black directors from 1914 until today that I found on Kaggle. The dataset contains information on black directors, such as their name, gender, birth year, birthplace, and more. Before we start analyzing the data, let&rsquo;s import the necessary libraries and load the dataset:</p>
@@ -274,12 +274,12 @@
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="//localhost:1313/post/uber-data-analytics/">
+  <a class="prev" href="http://localhost:1313/post/uber-data-analytics/">
     <span class="title">« Prev</span>
     <br>
     <span>Uber Data Analytics</span>
   </a>
-  <a class="next" href="//localhost:1313/post/project-3/">
+  <a class="next" href="http://localhost:1313/post/project-3/">
     <span class="title">Next »</span>
     <br>
     <span>Data Visualization</span>
@@ -291,7 +291,7 @@
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="//localhost:1313/">Beni Young Profile</a></span> · 
+        <span>&copy; 2024 <a href="http://localhost:1313/">Beni Young Profile</a></span> · 
 
     <span>
         Powered by
