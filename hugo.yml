@@ -1,4 +1,4 @@
-baseURL: "https://andronicus.cc/"
+baseURL: "/" #baseURL: "https://andronicus.cc/"
 LanguageCode: en-us
 title: Beni Young Profile
 pagerSize: 5
