@@ -50,8 +50,7 @@ figure.floatleft {
     margin-left: 15px;
 }
 
-:root {    
+.root {    
     --main-width: 900px;    
     --code-block-bg: rgb(26,17,16); #--code-block-bg: rgb(28, 29, 33);
-
 }
