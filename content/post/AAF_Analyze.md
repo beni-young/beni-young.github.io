@@ -514,24 +514,6 @@ df_movies.loc[df_movies['Year'] == 2021]
 df_movies.plot(x = 'Title', y='Year', kind = 'scatter')
 ```
 
-
-
-
-    <AxesSubplot:xlabel='Title', ylabel='Year'>
-
-
-
-    c:\Users\Andronicus\AppData\Local\Programs\Python\Python310\lib\site-packages\IPython\core\pylabtools.py:151: UserWarning: Glyph 131 (\x83) missing from current font.
-      fig.canvas.print_figure(bytes_io, **kw)
-    c:\Users\Andronicus\AppData\Local\Programs\Python\Python310\lib\site-packages\IPython\core\pylabtools.py:151: UserWarning: Glyph 130 (\x82) missing from current font.
-      fig.canvas.print_figure(bytes_io, **kw)
-
-
-
-    
-
-
-
 ```python
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -540,8 +522,6 @@ sns.histplot(df_movies.Year, kde=True)
 plt.show()
 ```
 
-
-    
 
 ```python
 df_movies['Year'].describe()
