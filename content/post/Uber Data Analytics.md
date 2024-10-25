@@ -4,12 +4,13 @@ description: "Uber Data Analytics"
 tags:
 title: "Uber Data Analytics"
 cover:
-  image: ""
+  image: "images/Uber_Analytics_Summary.png"
 ---
 
 I worked on this project to get an understanding on what exactly is involved in Data Engineering. I found this very helpful ["Uber Data Analytics"](https://www.youtube.com/watch?v=WpQECq5Hx9g&t=2417s) youtube tutorial that went through all the steps from beginning to end of Extract, Transform, and Load of this Uber dataset. I still need to add in the steps to this post, but for now is an outline of what I completed.
 
-<iframe width="800" height="900" src=https://lookerstudio.google.com/reporting/c6e747d0-db1f-453c-9795-9dc0a0b15a42/page/7jcQD?s=sQyFkRE_B0o" frameborder="0" style="border:0" allowfullscreen></iframe>
+[![Uber_Analytics_Looker_Studio](../../images/Uber_Analytics.png)](https://lookerstudio.google.com/reporting/c6e747d0-db1f-453c-9795-9dc0a0b15a42/page/7jcQD?s=sQyFkRE_B0o)
+
 
 ```html
 import pandas as pd
