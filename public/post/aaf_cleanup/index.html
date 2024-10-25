@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Exploratory Data Analysis on Black Directors - The Clean Up | Beni Young Profile</title>
+<meta name="keywords" content="">
+<meta name="description" content="Analyzing the Black Directors throughout the years - Part II">
+<meta name="author" content="Me">
+<link rel="canonical" href="http://localhost:1313/post/aaf_cleanup/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.83149db0d6fbafb771adc11e76afa182921268ae110ad3fa95a7e3e5116e1082.css" integrity="sha256-gxSdsNb7r7dxrcEedq&#43;hgpISaK4RCtP6lafj5RFuEII=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="apple-touch-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="mask-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/post/aaf_cleanup/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Exploratory Data Analysis on Black Directors - The Clean Up" />
+<meta property="og:description" content="Analyzing the Black Directors throughout the years - Part II" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/aaf_cleanup/" />
+<meta property="og:image" content="http://localhost:1313/images/th-1062852672.jpeg" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-24T16:47:08-04:00" />
+<meta property="article:modified_time" content="2024-10-24T16:47:08-04:00" /><meta property="og:site_name" content="Beni Young Profile" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/images/th-1062852672.jpeg" />
+<meta name="twitter:title" content="Exploratory Data Analysis on Black Directors - The Clean Up"/>
+<meta name="twitter:description" content="Analyzing the Black Directors throughout the years - Part II"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Exploratory Data Analysis on Black Directors - The Clean Up",
+      "item": "http://localhost:1313/post/aaf_cleanup/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Exploratory Data Analysis on Black Directors - The Clean Up",
+  "name": "Exploratory Data Analysis on Black Directors - The Clean Up",
+  "description": "Analyzing the Black Directors throughout the years - Part II",
+  "keywords": [
+    
+  ],
+  "articleBody": "It is time to do a little clean up with the information collected from the Scraper. Another pass through using Director Film Dataframe to see if there are new movies to add and to add IMDB id to director film list\nimport pandas as pd from imdb import Cinemagoer import re import os.path ia = Cinemagoer() file = 'missing_directors.csv' check_missing_directors_file = os.path.isfile(file) df_director_films = pd.read_csv('imdb_movies_directors.csv', encoding= 'unicode_escape') df_director_names = pd.read_csv('director_names.csv', encoding='unicode_escape') for name in df_director_names.itertuples(): for director in df_director_films.itertuples(): if name.Name == director.Name: df_director_names.at[name.Index, 'Person_ID'] = int(director.Person_ID) df_director_names['Person_ID'] = df_director_names['Person_ID'].fillna(0) df_director_names = df_director_names.astype({\"Person_ID\": int}) df_director_names = df_director_names.drop(\"Unnamed: 0\", axis=1) df_director_names.to_csv(\"director_names_imdb_person_id.csv\") df_director_names Name wiki_link Person_ID 0 Abdisalam Aato https://en.wikipedia.org/wiki/Abdisalam_Aato 0 1 Gay Abel-Bey https://en.wikipedia.org/wiki/Gay_Abel-Bey 8498 2 Fathia Absie https://en.wikipedia.org/wiki/Fathia_Absie 7280958 3 Anita W. Addison https://en.wikipedia.org/wiki/Anita_W._Addison 11697 4 Omowale Akintunde https://en.wikipedia.org/wiki/Omowale_Akintunde 0 ... ... ... ... 313 Tricia Woodgett https://en.wikipedia.org/wiki/Tricia_Woodgett 0 314 Bille Woodruff https://en.wikipedia.org/wiki/Bille_Woodruff 937306 315 Fronza Woods https://en.wikipedia.org/wiki/Fronza_Woods 0 316 Tanya Wright https://en.wikipedia.org/wiki/Tanya_Wright 942859 317 Phillip Youmans https://en.wikipedia.org/wiki/Phillip_Youmans 0 318 rows × 3 columns\n#Currently as of 6/23/2023 getting biography information like birth dates is not working #https://github.com/cinemagoer/cinemagoer/issues/462 person = ia.get_person('0000332', info=['biography']) print(person.infoset2keys) {'biography': []} Checking for directors that were not found automatically in IMDB\nCreating a list of missing directors and then manually seeing if they have a imdb id to use to add to imdb_movies_directors.csv\ndef imdb_search (name): imdb_people_search = [] people = ia.search_person(name) for person in people: if person['name'] == name: imdb_people_search.append([person.personID, person['name']]) if len(imdb_people_search) \u003e 1 or not len(imdb_people_search): imdb_people_search = 0 return imdb_people_search # if there isn't already a missing_directors.csv then create one # else take the missing_directors.csv and check to see if any directors can # be added to the director_names_imdb_person_id.csv # also their movies added to imdb_movies_diretors to the end of that list if not check_missing_directors_file: missing_directors_df = df_director_names.loc[df_director_names['Person_ID'] == 0] missing_directors_df.to_csv(\"missing_directors.csv\") missing_directors_df else: missing_directors_df = pd.read_csv(file, encoding= 'unicode_escape') missing = ia.search_person(missing_directors_df.loc[7]['Name']) print(missing) madeline = ia.get_person('7507414') print(madeline) if madeline.has_key('director'): for movies in madeline['filmography']['director']: year = 0000 if 'year' not in movies else int(movies['year']) print(movies['title'], year) [\u003cPerson id:1919862[http] name:_Mya Baker_\u003e, \u003cPerson id:7983695[http] name:_Mya Baker_\u003e, \u003cPerson id:1263939[http] name:_Danielle Panabaker_\u003e, \u003cPerson id:0659048[http] name:_Kay Panabaker_\u003e, \u003cPerson id:6803655[http] name:_Julia Maren Baker_\u003e, \u003cPerson id:5208385[http] name:_Brianna Baker_\u003e, \u003cPerson id:1019674[http] name:_Sala Baker_\u003e, \u003cPerson id:1128564[http] name:_Kitana Baker_\u003e, \u003cPerson id:10453571[http] name:_Malia Baker_\u003e, \u003cPerson id:0000711[http] name:_Rick Baker_\u003e, \u003cPerson id:6966400[http] name:_Stella Baker_\u003e, \u003cPerson id:12140549[http] name:_Maya Baker_\u003e, \u003cPerson id:4124843[http] name:_Mia Baker_\u003e, \u003cPerson id:11325477[http] name:_Eva Brooke Baker_\u003e, \u003cPerson id:9698063[http] name:_Ekaterina Baker_\u003e, \u003cPerson id:1179722[http] name:_Anita Baker_\u003e, \u003cPerson id:0851963[http] name:_Andrea Baker_\u003e, \u003cPerson id:0672060[http] name:_D.A. Pennebaker_\u003e, \u003cPerson id:4080841[http] name:_Lucy May Barker_\u003e, \u003cPerson id:2531646[http] name:_Shauna Baker_\u003e] Madeline Anderson Being Me 1975 I Am Somebody 1970 A Tribute to Malcolm X 1967 Integration Report I 1960 def update_directors_name(tmpID, tmpName): for name in df_director_names.itertuples(): if name.Name == tmpName: missing_directors_df.at[name.Index, 'Person_ID'] = int(tmpID) for n in range(0, len(missing_directors_df.index)): imdb_person = imdb_search(missing_directors_df['Name'][n]) if imdb_person == 0: continue else: person = ia.get_person(imdb_person[0][0]) print(person) if person.has_key('director'): for movies in person['filmography']['director']: update_directors_name(imdb_person[0][0], imdb_person[0][1]) missing_directors_df.to_csv(\"missing_directors.csv\") def wiki_imdb(imdb_id, wiki_name): imdb_person = [imdb_id, wiki_name] person = ia.get_person(imdb_person[0]) if person.has_key('director'): for movies in person['filmography']['director']: year = 0000 if 'year' not in movies else int(movies['year']) df_director_films.loc[len(df_director_films.index)] = [movies.movieID, movies['title'], year, imdb_person[0], imdb_person[1]] update_directors_name(imdb_person[0], imdb_person[1]) wiki_imdb('10555174', 'Robert Van Lierop') df_director_films.to_csv(\"Director_Movies_Clean.csv\", index=False) from bs4 import BeautifulSoup import requests imdb_re = 'https://www.imdb.com/name/' total = 0 for i in range(0, len(test_df.index)): wiki_url = \"https://en.wikipedia.org\" + test_df['wiki_link'][i] print(wiki_url) table_check = False try: result = requests.get(wiki_url) result.raise_for_status() doc = BeautifulSoup(result.text, \"html.parser\") except Exception as e: print(e) imdb_id = doc.find_all(rel=\"nofollow\") for imdb in imdb_id: if re.search(imdb_re, imdb.get('href')): # print(imdb) print(imdb.text) id = re.search('\\d+', imdb.get(\"href\")) print(id.group()) wiki_imdb(id.group(), imdb.text) table_check = True if not table_check: total += 1 print(f\"Total: {total} - There wasn't a match for {wiki_url}\") df_director_films.describe() Year count 6611.000000 mean 1797.361972 std 601.922601 min 0.000000 25% 1977.000000 50% 2001.000000 75% 2013.000000 max 2027.000000 ",
+  "wordCount" : "613",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/images/th-1062852672.jpeg","datePublished": "2024-10-24T16:47:08-04:00",
+  "dateModified": "2024-10-24T16:47:08-04:00",
+  "author":{
+    "@type": "Person",
+    "name": "Me"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/post/aaf_cleanup/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Beni Young Profile",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/%3Clink%20/%20abs%20url%3E"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
+                <img src="http://localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
+                    height="35">andronicus.cc</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/post/" title="Post">
+                    <span>Post</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/beni-young-0531a3235/" title="Linkedin">
+                    <span>Linkedin</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/beni-young" title="Github">
+                    <span>Github</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Exploratory Data Analysis on Black Directors - The Clean Up
+    </h1>
+    <div class="post-description">
+      Analyzing the Black Directors throughout the years - Part II
+    </div>
+    <div class="post-meta"><span title='2024-10-24 16:47:08 -0400 -0400'>October 24, 2024</span>&nbsp;·&nbsp;Me
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/images/th-1062852672.jpeg" alt="">
+        
+</figure>
+  <div class="post-content"><p>It is time to do a little clean up with the information collected from the Scraper. Another pass through using Director Film Dataframe to see if there are new movies to add and to add IMDB id to director film list</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">imdb</span> <span class="kn">import</span> <span class="n">Cinemagoer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os.path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span> <span class="o">=</span> <span class="n">Cinemagoer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;missing_directors.csv&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">check_missing_directors_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_films</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;imdb_movies_directors.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span> <span class="s1">&#39;unicode_escape&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;director_names.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode_escape&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df_director_names</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">director</span> <span class="ow">in</span> <span class="n">df_director_films</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span> 
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="n">director</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">df_director_names</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="s1">&#39;Person_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">director</span><span class="o">.</span><span class="n">Person_ID</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span> <span class="o">=</span> <span class="n">df_director_names</span><span class="o">.</span><span class="n">astype</span><span class="p">({</span><span class="s2">&#34;Person_ID&#34;</span><span class="p">:</span> <span class="nb">int</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span> <span class="o">=</span> <span class="n">df_director_names</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&#34;Unnamed: 0&#34;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;director_names_imdb_person_id.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>wiki_link</th>
+      <th>Person_ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Abdisalam Aato</td>
+      <td>https://en.wikipedia.org/wiki/Abdisalam_Aato</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Gay Abel-Bey</td>
+      <td>https://en.wikipedia.org/wiki/Gay_Abel-Bey</td>
+      <td>8498</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Fathia Absie</td>
+      <td>https://en.wikipedia.org/wiki/Fathia_Absie</td>
+      <td>7280958</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Anita W. Addison</td>
+      <td>https://en.wikipedia.org/wiki/Anita_W._Addison</td>
+      <td>11697</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Omowale Akintunde</td>
+      <td>https://en.wikipedia.org/wiki/Omowale_Akintunde</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>313</th>
+      <td>Tricia Woodgett</td>
+      <td>https://en.wikipedia.org/wiki/Tricia_Woodgett</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>314</th>
+      <td>Bille Woodruff</td>
+      <td>https://en.wikipedia.org/wiki/Bille_Woodruff</td>
+      <td>937306</td>
+    </tr>
+    <tr>
+      <th>315</th>
+      <td>Fronza Woods</td>
+      <td>https://en.wikipedia.org/wiki/Fronza_Woods</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>Tanya Wright</td>
+      <td>https://en.wikipedia.org/wiki/Tanya_Wright</td>
+      <td>942859</td>
+    </tr>
+    <tr>
+      <th>317</th>
+      <td>Phillip Youmans</td>
+      <td>https://en.wikipedia.org/wiki/Phillip_Youmans</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>318 rows × 3 columns</p>
+</div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#Currently as of 6/23/2023 getting biography information like birth dates is not working</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#https://github.com/cinemagoer/cinemagoer/issues/462</span>
+</span></span><span class="line"><span class="cl"><span class="n">person</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="s1">&#39;0000332&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;biography&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="o">.</span><span class="n">infoset2keys</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>{'biography': []}
+</code></pre>
+<p>Checking for directors that were not found automatically in IMDB<br />
+Creating a list of missing directors and then manually seeing if they have a imdb id to use to add to imdb_movies_directors.csv</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">imdb_search</span> <span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">imdb_people_search</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">people</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">search_person</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">:</span>            
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">imdb_people_search</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">person</span><span class="o">.</span><span class="n">personID</span><span class="p">,</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">imdb_people_search</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">imdb_people_search</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">imdb_people_search</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">imdb_people_search</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># if there isn&#39;t already a missing_directors.csv then create one</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># else take the missing_directors.csv and check to see if any directors can </span>
+</span></span><span class="line"><span class="cl"><span class="c1"># be added to the director_names_imdb_person_id.csv</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># also their movies added to imdb_movies_diretors to the end of that list</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="ow">not</span> <span class="n">check_missing_directors_file</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">missing_directors_df</span> <span class="o">=</span> <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">missing_directors_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;missing_directors.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">missing_directors_df</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">missing_directors_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span> <span class="s1">&#39;unicode_escape&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">missing</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">search_person</span><span class="p">(</span><span class="n">missing_directors_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">7</span><span class="p">][</span><span class="s1">&#39;Name&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">madeline</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="s1">&#39;7507414&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">madeline</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">madeline</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;director&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">movies</span> <span class="ow">in</span> <span class="n">madeline</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">][</span><span class="s1">&#39;director&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">year</span> <span class="o">=</span> <span class="mi">0000</span> <span class="k">if</span> <span class="s1">&#39;year&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">movies</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">movies</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span> 
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">movies</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span> <span class="n">year</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">   <span class="p">[</span><span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">1919862</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Mya</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">7983695</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Mya</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">1263939</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Danielle</span> <span class="n">Panabaker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">0659048</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Kay</span> <span class="n">Panabaker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">6803655</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Julia</span> <span class="n">Maren</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">5208385</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Brianna</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">1019674</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Sala</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">1128564</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Kitana</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">10453571</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Malia</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">0000711</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Rick</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">6966400</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Stella</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">12140549</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Maya</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">4124843</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Mia</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">11325477</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Eva</span> <span class="n">Brooke</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">9698063</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Ekaterina</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">1179722</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Anita</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">0851963</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Andrea</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">0672060</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_D</span><span class="o">.</span><span class="n">A</span><span class="o">.</span> <span class="n">Pennebaker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">4080841</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Lucy</span> <span class="n">May</span> <span class="n">Barker_</span><span class="o">&gt;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="n">Person</span> <span class="nb">id</span><span class="p">:</span><span class="mi">2531646</span><span class="p">[</span><span class="n">http</span><span class="p">]</span> <span class="n">name</span><span class="p">:</span><span class="n">_Shauna</span> <span class="n">Baker_</span><span class="o">&gt;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">Madeline</span> <span class="n">Anderson</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Being</span> <span class="n">Me</span> <span class="mi">1975</span>
+</span></span><span class="line"><span class="cl">    <span class="n">I</span> <span class="n">Am</span> <span class="n">Somebody</span> <span class="mi">1970</span>
+</span></span><span class="line"><span class="cl">    <span class="n">A</span> <span class="n">Tribute</span> <span class="n">to</span> <span class="n">Malcolm</span> <span class="n">X</span> <span class="mi">1967</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Integration</span> <span class="n">Report</span> <span class="n">I</span> <span class="mi">1960</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_directors_name</span><span class="p">(</span><span class="n">tmpID</span><span class="p">,</span> <span class="n">tmpName</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df_director_names</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span> 
+</span></span><span class="line"><span class="cl">             <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="n">tmpName</span><span class="p">:</span>                
+</span></span><span class="line"><span class="cl">                <span class="n">missing_directors_df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">Index</span><span class="p">,</span> <span class="s1">&#39;Person_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tmpID</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing_directors_df</span><span class="o">.</span><span class="n">index</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">imdb_person</span> <span class="o">=</span> <span class="n">imdb_search</span><span class="p">(</span><span class="n">missing_directors_df</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">imdb_person</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">person</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="n">imdb_person</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">person</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;director&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">movies</span> <span class="ow">in</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">][</span><span class="s1">&#39;director&#39;</span><span class="p">]:</span>                
+</span></span><span class="line"><span class="cl">                <span class="n">update_directors_name</span><span class="p">(</span><span class="n">imdb_person</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">imdb_person</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>                            
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">missing_directors_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;missing_directors.csv&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">wiki_imdb</span><span class="p">(</span><span class="n">imdb_id</span><span class="p">,</span> <span class="n">wiki_name</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">imdb_person</span> <span class="o">=</span> <span class="p">[</span><span class="n">imdb_id</span><span class="p">,</span> <span class="n">wiki_name</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">person</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="n">imdb_person</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">person</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s1">&#39;director&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">movies</span> <span class="ow">in</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;filmography&#39;</span><span class="p">][</span><span class="s1">&#39;director&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">year</span> <span class="o">=</span> <span class="mi">0000</span> <span class="k">if</span> <span class="s1">&#39;year&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">movies</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">movies</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>            
+</span></span><span class="line"><span class="cl">            <span class="n">df_director_films</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">df_director_films</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">movies</span><span class="o">.</span><span class="n">movieID</span><span class="p">,</span> <span class="n">movies</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span> <span class="n">year</span><span class="p">,</span> <span class="n">imdb_person</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">imdb_person</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">update_directors_name</span><span class="p">(</span><span class="n">imdb_person</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">imdb_person</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>            
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">wiki_imdb</span><span class="p">(</span><span class="s1">&#39;10555174&#39;</span><span class="p">,</span> <span class="s1">&#39;Robert Van Lierop&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">df_director_films</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;Director_Movies_Clean.csv&#34;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">imdb_re</span> <span class="o">=</span> <span class="s1">&#39;https://www.imdb.com/name/&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_df</span><span class="o">.</span><span class="n">index</span><span class="p">)):</span>   
+</span></span><span class="line"><span class="cl">    <span class="n">wiki_url</span> <span class="o">=</span> <span class="s2">&#34;https://en.wikipedia.org&#34;</span> <span class="o">+</span> <span class="n">test_df</span><span class="p">[</span><span class="s1">&#39;wiki_link&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>   
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">wiki_url</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">    <span class="n">table_check</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">wiki_url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">doc</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s2">&#34;html.parser&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">imdb_id</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s2">&#34;nofollow&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">imdb</span> <span class="ow">in</span> <span class="n">imdb_id</span><span class="p">:</span>        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">imdb_re</span><span class="p">,</span> <span class="n">imdb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)):</span>            
+</span></span><span class="line"><span class="cl">            <span class="c1"># print(imdb)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">imdb</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">id</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="n">imdb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;href&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="nb">id</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">            <span class="n">wiki_imdb</span><span class="p">(</span><span class="nb">id</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="n">imdb</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">table_check</span> <span class="o">=</span> <span class="kc">True</span>            
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">table_check</span><span class="p">:</span>        
+</span></span><span class="line"><span class="cl">        <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Total: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> - There wasn&#39;t a match for </span><span class="si">{</span><span class="n">wiki_url</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_director_films</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>6611.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1797.361972</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>601.922601</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1977.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>2001.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2013.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2027.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/post/aaf_analyze/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Exploratory Data Analysis on Black Directors - The Analysis</span>
+  </a>
+  <a class="next" href="http://localhost:1313/post/aaf_scraper/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Exploratory Data Analysis on Black Directors - The Scraper</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">Beni Young Profile</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

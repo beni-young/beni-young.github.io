@@ -10,7 +10,9 @@ cover:
 I was wondering if there has been a progression of Black movies being made since the question [why is the oscars so white](https://www.bbc.com/culture/article/20240311-oscars-race-problem-oscarssowhite-2024)
 . I wondered what it would look like to see the black films being made throughout the years. It was hard to say what qualifies as a black movies as there are a significant amount of movies made that targetted a black audience but wasn't necessarily created by black artist. So I thought if the movies was directed by a black director then it qualifies as a black movies and wanted to see the growth of black directors.
 
-I needed to find a way to get black film directors into a database to do some analysis, so I figured the best way to get a significant amount of information was throught wikipedia and IMDB.
+I needed to find a way to get black film directors into a database to do some analysis, so I figured the best way to get a significant amount of information was through wikipedia and IMDB.
+
+![black_film_directors_wiki](../../images/African-American_Film_Directors_Wikipedia.png)
 
 This is where it starts by creating a scraper that is going to be used to find African American Film Directors from combining information from Wikipedia and IMDB
 

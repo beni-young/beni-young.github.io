@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Exploratory Data Analysis on Black Directors - The Analysis | Beni Young Profile</title>
+<meta name="keywords" content="">
+<meta name="description" content="Analyzing the Black Directors throughout the years - Part III">
+<meta name="author" content="Me">
+<link rel="canonical" href="http://localhost:1313/post/aaf_analyze/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.83149db0d6fbafb771adc11e76afa182921268ae110ad3fa95a7e3e5116e1082.css" integrity="sha256-gxSdsNb7r7dxrcEedq&#43;hgpISaK4RCtP6lafj5RFuEII=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="apple-touch-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<link rel="mask-icon" href="http://localhost:1313/%3Clink%20/%20abs%20url%3E">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/post/aaf_analyze/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Exploratory Data Analysis on Black Directors - The Analysis" />
+<meta property="og:description" content="Analyzing the Black Directors throughout the years - Part III" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/aaf_analyze/" />
+<meta property="og:image" content="http://localhost:1313/images/th-1813448526.jpeg" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-25T00:47:08-04:00" />
+<meta property="article:modified_time" content="2024-10-25T00:47:08-04:00" /><meta property="og:site_name" content="Beni Young Profile" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="http://localhost:1313/images/th-1813448526.jpeg" />
+<meta name="twitter:title" content="Exploratory Data Analysis on Black Directors - The Analysis"/>
+<meta name="twitter:description" content="Analyzing the Black Directors throughout the years - Part III"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Exploratory Data Analysis on Black Directors - The Analysis",
+      "item": "http://localhost:1313/post/aaf_analyze/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Exploratory Data Analysis on Black Directors - The Analysis",
+  "name": "Exploratory Data Analysis on Black Directors - The Analysis",
+  "description": "Analyzing the Black Directors throughout the years - Part III",
+  "keywords": [
+    
+  ],
+  "articleBody": "import pandas as pd import re import imdb import time ia = imdb.Cinemagoer() df_director_films = pd.read_csv('Director_Movies_Clean.csv', encoding= 'utf-8-sig') df_director_names = pd.read_csv('director_names.csv', encoding='unicode_escape') kinds = {} df_director_films Movie_ID Title Year Person_ID Name 0 3501074 Madam Secretary (2015-2017) 0 151 Morgan Freeman 1 106464 Bopha! 1993 151 Morgan Freeman 2 995854 A Journal for Jordan 2021 243 Denzel Washington 3 2671706 Fences 2016 243 Denzel Washington 4 413573 Grey's Anatomy 2016 243 Denzel Washington ... ... ... ... ... ... 6606 8571700 Remembrance: A Portrait Study 1967 9913311 Edward Owens 6607 12127402 Autrefois J'ai aime une femme 1966 9913311 Edward Owens 6608 12666216 Sisters of the Screen - African Women in Cinema 1966 11720380 Beti Ellerson 6609 12666216 Sisters of the Screen - African Women in Cinema 2002 11720380 Beti Ellerson 6610 10038432 A Luta Continua 1972 10555174 Robert Van Lierop 6611 rows × 5 columns\nRemoved all Duplicates from Dataframe\ndf_movies = df_director_films.drop_duplicates(subset=None, keep='first', inplace=False, ignore_index=False) df_movies Movie_ID Title Year Person_ID Name 0 3501074 Madam Secretary (2015-2017) 0 151 Morgan Freeman 1 106464 Bopha! 1993 151 Morgan Freeman 2 995854 A Journal for Jordan 2021 243 Denzel Washington 3 2671706 Fences 2016 243 Denzel Washington 4 413573 Grey's Anatomy 2016 243 Denzel Washington ... ... ... ... ... ... 6606 8571700 Remembrance: A Portrait Study 1967 9913311 Edward Owens 6607 12127402 Autrefois J'ai aime une femme 1966 9913311 Edward Owens 6608 12666216 Sisters of the Screen - African Women in Cinema 1966 11720380 Beti Ellerson 6609 12666216 Sisters of the Screen - African Women in Cinema 2002 11720380 Beti Ellerson 6610 10038432 A Luta Continua 1972 10555174 Robert Van Lierop 6316 rows × 5 columns\nRemove all the movies with no year (possibly television shows)\ndf_movies = df_movies[df_movies.Year != 0] df_movies.describe() Movie_ID Year Person_ID count 5.699000e+03 5699.000000 5.699000e+03 mean 4.781896e+06 1998.656431 9.356992e+05 std 4.761429e+06 19.859445 1.235733e+06 min 1.187000e+04 1919.000000 1.510000e+02 25% 3.851770e+05 1991.000000 2.288530e+05 50% 3.223890e+06 2004.000000 6.085750e+05 75% 8.135978e+06 2014.000000 9.373060e+05 max 2.107769e+07 2027.000000 1.172038e+07 df_movies.loc[df_movies['Year'] == 2021] Movie_ID Title Year Person_ID Name 2 995854 A Journal for Jordan 2021 243 Denzel Washington 19 14324128 NYC Epicenters 9/11-2021ÃÂÃÂ½ 2021 490 Spike Lee 185 13935770 Chris Rock Total Blackout: The Tamborine Exten... 2021 1674 Chris Rock 267 10608454 Harlem 2021 2700 Malcolm D. Lee 268 3554046 Space Jam: A New Legacy 2021 2700 Malcolm D. Lee ... ... ... ... ... ... 6487 12223626 Black Seeds: The History of Africans in America 2021 5679045 Bayer Mack 6529 8537542 Cold Blood 2021 6462306 Taylor Ri'chard 6541 13814666 Pursued 2021 7280958 Fathia Absie 6552 15596914 Voodoo 2021 7385237 Phillip Youmans 6604 11753636 Private Imaginings and Narrative Facts 2021 9913311 Edward Owens 173 rows × 5 columns\ndf_movies.plot(x = 'Title', y='Year', kind = 'scatter') ",
+  "wordCount" : "1235",
+  "inLanguage": "en",
+  "image":"http://localhost:1313/images/th-1813448526.jpeg","datePublished": "2024-10-25T00:47:08-04:00",
+  "dateModified": "2024-10-25T00:47:08-04:00",
+  "author":{
+    "@type": "Person",
+    "name": "Me"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/post/aaf_analyze/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Beni Young Profile",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/%3Clink%20/%20abs%20url%3E"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="andronicus.cc (Alt + H)">
+                <img src="http://localhost:1313/apple-touch-icon.png" alt="" aria-label="logo"
+                    height="35">andronicus.cc</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/resume/" title="Resume">
+                    <span>Resume</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/post/" title="Post">
+                    <span>Post</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/beni-young-0531a3235/" title="Linkedin">
+                    <span>Linkedin</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/beni-young" title="Github">
+                    <span>Github</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/post/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Exploratory Data Analysis on Black Directors - The Analysis
+    </h1>
+    <div class="post-description">
+      Analyzing the Black Directors throughout the years - Part III
+    </div>
+    <div class="post-meta"><span title='2024-10-25 00:47:08 -0400 -0400'>October 25, 2024</span>&nbsp;·&nbsp;Me
+
+</div>
+  </header> 
+<figure class="entry-cover"><img loading="eager" src="http://localhost:1313/images/th-1813448526.jpeg" alt="">
+        
+</figure>
+  <div class="post-content"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">imdb</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ia</span> <span class="o">=</span> <span class="n">imdb</span><span class="o">.</span><span class="n">Cinemagoer</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_films</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Director_Movies_Clean.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span> <span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;director_names.csv&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;unicode_escape&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">kinds</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_director_films</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Movie_ID</th>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Person_ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3501074</td>
+      <td>Madam Secretary (2015-2017)</td>
+      <td>0</td>
+      <td>151</td>
+      <td>Morgan Freeman</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>106464</td>
+      <td>Bopha!</td>
+      <td>1993</td>
+      <td>151</td>
+      <td>Morgan Freeman</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>995854</td>
+      <td>A Journal for Jordan</td>
+      <td>2021</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2671706</td>
+      <td>Fences</td>
+      <td>2016</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>413573</td>
+      <td>Grey's Anatomy</td>
+      <td>2016</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6606</th>
+      <td>8571700</td>
+      <td>Remembrance: A Portrait Study</td>
+      <td>1967</td>
+      <td>9913311</td>
+      <td>Edward Owens</td>
+    </tr>
+    <tr>
+      <th>6607</th>
+      <td>12127402</td>
+      <td>Autrefois J'ai aime une femme</td>
+      <td>1966</td>
+      <td>9913311</td>
+      <td>Edward Owens</td>
+    </tr>
+    <tr>
+      <th>6608</th>
+      <td>12666216</td>
+      <td>Sisters of the Screen - African Women in Cinema</td>
+      <td>1966</td>
+      <td>11720380</td>
+      <td>Beti Ellerson</td>
+    </tr>
+    <tr>
+      <th>6609</th>
+      <td>12666216</td>
+      <td>Sisters of the Screen - African Women in Cinema</td>
+      <td>2002</td>
+      <td>11720380</td>
+      <td>Beti Ellerson</td>
+    </tr>
+    <tr>
+      <th>6610</th>
+      <td>10038432</td>
+      <td>A Luta Continua</td>
+      <td>1972</td>
+      <td>10555174</td>
+      <td>Robert Van Lierop</td>
+    </tr>
+  </tbody>
+</table>
+<p>6611 rows × 5 columns</p>
+</div>
+<p>Removed all Duplicates from Dataframe</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span> <span class="o">=</span> <span class="n">df_director_films</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Movie_ID</th>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Person_ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3501074</td>
+      <td>Madam Secretary (2015-2017)</td>
+      <td>0</td>
+      <td>151</td>
+      <td>Morgan Freeman</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>106464</td>
+      <td>Bopha!</td>
+      <td>1993</td>
+      <td>151</td>
+      <td>Morgan Freeman</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>995854</td>
+      <td>A Journal for Jordan</td>
+      <td>2021</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2671706</td>
+      <td>Fences</td>
+      <td>2016</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>413573</td>
+      <td>Grey's Anatomy</td>
+      <td>2016</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6606</th>
+      <td>8571700</td>
+      <td>Remembrance: A Portrait Study</td>
+      <td>1967</td>
+      <td>9913311</td>
+      <td>Edward Owens</td>
+    </tr>
+    <tr>
+      <th>6607</th>
+      <td>12127402</td>
+      <td>Autrefois J'ai aime une femme</td>
+      <td>1966</td>
+      <td>9913311</td>
+      <td>Edward Owens</td>
+    </tr>
+    <tr>
+      <th>6608</th>
+      <td>12666216</td>
+      <td>Sisters of the Screen - African Women in Cinema</td>
+      <td>1966</td>
+      <td>11720380</td>
+      <td>Beti Ellerson</td>
+    </tr>
+    <tr>
+      <th>6609</th>
+      <td>12666216</td>
+      <td>Sisters of the Screen - African Women in Cinema</td>
+      <td>2002</td>
+      <td>11720380</td>
+      <td>Beti Ellerson</td>
+    </tr>
+    <tr>
+      <th>6610</th>
+      <td>10038432</td>
+      <td>A Luta Continua</td>
+      <td>1972</td>
+      <td>10555174</td>
+      <td>Robert Van Lierop</td>
+    </tr>
+  </tbody>
+</table>
+<p>6316 rows × 5 columns</p>
+</div>
+<p>Remove all the movies with no year (possibly television shows)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span> <span class="o">=</span> <span class="n">df_movies</span><span class="p">[</span><span class="n">df_movies</span><span class="o">.</span><span class="n">Year</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Movie_ID</th>
+      <th>Year</th>
+      <th>Person_ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>5.699000e+03</td>
+      <td>5699.000000</td>
+      <td>5.699000e+03</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>4.781896e+06</td>
+      <td>1998.656431</td>
+      <td>9.356992e+05</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>4.761429e+06</td>
+      <td>19.859445</td>
+      <td>1.235733e+06</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.187000e+04</td>
+      <td>1919.000000</td>
+      <td>1.510000e+02</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>3.851770e+05</td>
+      <td>1991.000000</td>
+      <td>2.288530e+05</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>3.223890e+06</td>
+      <td>2004.000000</td>
+      <td>6.085750e+05</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>8.135978e+06</td>
+      <td>2014.000000</td>
+      <td>9.373060e+05</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>2.107769e+07</td>
+      <td>2027.000000</td>
+      <td>1.172038e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2021</span><span class="p">]</span>
+</span></span></code></pre></div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+<p></style></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Movie_ID</th>
+      <th>Title</th>
+      <th>Year</th>
+      <th>Person_ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>995854</td>
+      <td>A Journal for Jordan</td>
+      <td>2021</td>
+      <td>243</td>
+      <td>Denzel Washington</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>14324128</td>
+      <td>NYC Epicenters 9/11-2021ÃÂÃÂ½</td>
+      <td>2021</td>
+      <td>490</td>
+      <td>Spike Lee</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>13935770</td>
+      <td>Chris Rock Total Blackout: The Tamborine Exten...</td>
+      <td>2021</td>
+      <td>1674</td>
+      <td>Chris Rock</td>
+    </tr>
+    <tr>
+      <th>267</th>
+      <td>10608454</td>
+      <td>Harlem</td>
+      <td>2021</td>
+      <td>2700</td>
+      <td>Malcolm D. Lee</td>
+    </tr>
+    <tr>
+      <th>268</th>
+      <td>3554046</td>
+      <td>Space Jam: A New Legacy</td>
+      <td>2021</td>
+      <td>2700</td>
+      <td>Malcolm D. Lee</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6487</th>
+      <td>12223626</td>
+      <td>Black Seeds: The History of Africans in America</td>
+      <td>2021</td>
+      <td>5679045</td>
+      <td>Bayer Mack</td>
+    </tr>
+    <tr>
+      <th>6529</th>
+      <td>8537542</td>
+      <td>Cold Blood</td>
+      <td>2021</td>
+      <td>6462306</td>
+      <td>Taylor Ri'chard</td>
+    </tr>
+    <tr>
+      <th>6541</th>
+      <td>13814666</td>
+      <td>Pursued</td>
+      <td>2021</td>
+      <td>7280958</td>
+      <td>Fathia Absie</td>
+    </tr>
+    <tr>
+      <th>6552</th>
+      <td>15596914</td>
+      <td>Voodoo</td>
+      <td>2021</td>
+      <td>7385237</td>
+      <td>Phillip Youmans</td>
+    </tr>
+    <tr>
+      <th>6604</th>
+      <td>11753636</td>
+      <td>Private Imaginings and Narrative Facts</td>
+      <td>2021</td>
+      <td>9913311</td>
+      <td>Edward Owens</td>
+    </tr>
+  </tbody>
+</table>
+<p>173 rows × 5 columns</p>
+</div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>&lt;AxesSubplot:xlabel='Title', ylabel='Year'&gt;
+
+
+
+c:\Users\Andronicus\AppData\Local\Programs\Python\Python310\lib\site-packages\IPython\core\pylabtools.py:151: UserWarning: Glyph 131 (\x83) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+c:\Users\Andronicus\AppData\Local\Programs\Python\Python310\lib\site-packages\IPython\core\pylabtools.py:151: UserWarning: Glyph 130 (\x82) missing from current font.
+  fig.canvas.print_figure(bytes_io, **kw)
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_movies</span><span class="o">.</span><span class="n">Year</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span></span></code></pre></div><pre><code>count    5699.000000
+mean     1998.656431
+std        19.859445
+min      1919.000000
+25%      1991.000000
+50%      2004.000000
+75%      2014.000000
+max      2027.000000
+Name: Year, dtype: float64
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_director_id</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">director</span> <span class="ow">in</span> <span class="n">df_movies</span><span class="o">.</span><span class="n">itertuples</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">director</span><span class="o">.</span><span class="n">Name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">director</span><span class="o">.</span><span class="n">Person_ID</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">movie_format</span><span class="p">(</span><span class="n">movie_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">movie_id</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">movie_id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">movie_id</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">movie_id</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">movie_metascore</span><span class="p">(</span><span class="n">movie_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">movie_id</span><span class="p">[</span><span class="s1">&#39;metascore&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">movie_budget</span><span class="p">(</span><span class="n">movie_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">box_off</span> <span class="o">=</span> <span class="n">movie_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;box office&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">box_off</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">budget</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;[0-9,]*\d&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">movie_id</span><span class="p">[</span><span class="s1">&#39;box office&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>  <span class="n">budget</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="c1">#tstmovie = ia.get_movie(&#39;13972246&#39;, info=[&#39;main&#39;, &#39;critic_reviews&#39;, &#39;vote details&#39;, &#39;plot&#39;])</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(tstmovie[&#39;box office&#39;])</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#budget = re.search(&#39;[0-9,]*\d&#39;, &#39;$1&#39;) #str(tstmovie[&#39;box office&#39;]))</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(budget)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(movie_budget(tstmovie))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># print(movie_metascore(tstmovie))</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Genres&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Metascore&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Budget&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Votes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Rating&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Runtime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_movies</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span> <span class="o">=</span> <span class="n">df_movies</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#x = 0</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">6049</span><span class="p">,</span> <span class="mi">6316</span><span class="p">):</span> <span class="c1">#df_movies.itertuples():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">150</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Movie_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> and  </span><span class="si">{</span><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span> <span class="c1"># 3 minutes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">movie</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_movie</span><span class="p">(</span><span class="n">df_movies</span><span class="p">[</span><span class="s1">&#39;Movie_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">info</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;critic_reviews&#39;</span><span class="p">,</span> <span class="s1">&#39;vote details&#39;</span><span class="p">,</span> <span class="s1">&#39;plot&#39;</span><span class="p">])</span> <span class="c1">#ia.get_movie(df_movies[&#39;Movie_ID&#39;][i])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Type&#39;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kind&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Runtime&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="n">movie_format</span><span class="p">(</span><span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;runtime&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span> <span class="c1">#movie.get(&#39;runtime&#39;, None)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Rating&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Votes&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;votes&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Genres&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">movie_format</span><span class="p">(</span><span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;genres&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span> <span class="c1">#str(movie.get(&#39;genres&#39;, None))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Metascore&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">movie</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metascore&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_movies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Budget&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">movie_budget</span><span class="p">(</span><span class="n">movie</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#x +=1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">#df_movies</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># if x == 10:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     break</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#df_movies.head(10)        </span>
+</span></span></code></pre></div><pre><code>9847438 and  Football Town: Cleveland Ohio
+6340186 and  Film 13
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_movies</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;Director_Movies_Analyze.csv&#34;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">Movie_ID</span> <span class="ow">in</span> <span class="n">df_movies</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df_movies</span><span class="p">[</span><span class="n">Movie_ID</span><span class="p">])</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">spike_lee</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="s1">&#39;0000490&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sidney_poitier</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="s1">&#39;0001627&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tvshow</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_movie</span><span class="p">(</span><span class="s1">&#39;209093&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="s1">&#39;critic_reviews&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">spike_lee</span><span class="p">[</span><span class="s1">&#39;birth date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">spike_lee</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">spike_lee</span><span class="p">[</span><span class="s1">&#39;birth info&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">sidney_poitier</span><span class="p">[</span><span class="s1">&#39;birth date&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">sidney_poitier</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">sidney_poitier</span><span class="p">[</span><span class="s1">&#39;birth info&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>1957-03-20  5' 7&quot; (1.7 m) {'birth place': 'Atlanta, Georgia, USA'} 
+1927-02-20  6' 2½&quot; (1.89 m) {'birth place': 'Miami, Florida, USA'} 
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tvshow</span><span class="o">.</span><span class="n">infoset2keys</span>
+</span></span></code></pre></div><pre><code>{'critic_reviews': []}
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">mv</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_movie</span><span class="p">(</span><span class="s1">&#39;790770&#39;</span><span class="p">,</span> <span class="n">info</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;critic_reviews&#39;</span><span class="p">,</span> <span class="s1">&#39;vote details&#39;</span><span class="p">,</span> <span class="s1">&#39;plot&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#metascore = ia.get_movie_critic_reviews(&#39;7349662&#39;)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">person_height_ft</span><span class="p">(</span><span class="n">person_id</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">person_height</span> <span class="o">=</span> <span class="n">person_id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">person_height</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">person_height</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">meter</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;[0-9</span><span class="se">\&#39;</span><span class="s1">]+\s[0-9]+.?&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">person_height</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">height</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;\([0-9]+\.?[0-9]*&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">person_height</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">height</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">height</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span>  <span class="n">meter</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tstperson</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="s1">&#39;0002700&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#str(director.Person_ID).zfill(7)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(tstmovie[&#39;box office&#39;])</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#budget = re.search(&#39;[0-9,]*\d&#39;, &#39;$1&#39;) #str(tstmovie[&#39;box office&#39;]))</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(budget)</span>
+</span></span><span class="line"><span class="cl"><span class="n">birth_list</span> <span class="o">=</span> <span class="n">tstperson</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;birth info&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#city, state, country = str(birth_list[&#39;birth place&#39;]).split(&#34;, &#34;)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#city, state, country = birth_list.split(&#39;,&#39;)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(tstperson[&#39;mini biography&#39;])</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(tstperson.get(&#39;height&#39;, None))</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">birth_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#print(f&#34;{city} adfsfd {state} aerrod {country}&#34;)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#tstperson[&#39;birth info&#39;]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># print(movie_metascore(tstmovie))</span>
+</span></span></code></pre></div><pre><code>{'birth place': 'USA'}
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tstperson</span><span class="o">.</span><span class="n">infoset2keys</span>
+</span></span></code></pre></div><pre><code>{'main': ['birth info', 'headshot', 'filmography', 'imdbID', 'name'],
+ 'biography': ['headshot',
+  'birth name',
+  'height',
+  'mini biography',
+  'trade mark',
+  'trivia',
+  'quotes',
+  'birth date',
+  'birth notes']}
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_director_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;director_names_analyze.csv&#34;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8-sig&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">67</span><span class="p">,</span> <span class="mi">311</span><span class="p">):</span> <span class="c1">#df_director_names.itertuples():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> and  </span><span class="si">{</span><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span> <span class="c1"># 3 minutes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">director</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">person_height</span> <span class="o">=</span> <span class="n">director</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">person_height</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">person_height</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">height_m</span> <span class="o">=</span> <span class="n">height_ft</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>    
+</span></span><span class="line"><span class="cl">        <span class="n">height_ft</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;[0-9</span><span class="se">\&#39;</span><span class="s1">]*\s[0-9]*.?&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">person_height</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">height_ft</span> <span class="o">=</span> <span class="n">height_ft</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">height_m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;\([0-9]+\.?[0-9]*&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">person_height</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">height_m</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">height_m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">birth_list</span> <span class="o">=</span> <span class="n">tstperson</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;birth info&#39;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">birth_list</span> <span class="o">==</span> <span class="s2">&#34;&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span> <span class="o">=</span> <span class="n">birth_state</span> <span class="o">=</span> <span class="n">birth_country</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span><span class="p">,</span> <span class="n">birth_state</span><span class="p">,</span> <span class="n">birth_country</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth Date&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">director</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;birth date&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Height ft&#39;</span><span class="p">]</span>   <span class="o">=</span> <span class="n">height_ft</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Height m&#39;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">height_m</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth City&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">birth_city</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth State&#39;</span><span class="p">]</span>      <span class="o">=</span>  <span class="n">birth_state</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth Country&#39;</span><span class="p">]</span>   <span class="o">=</span>  <span class="n">birth_country</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Headshot&#39;</span><span class="p">]</span>   <span class="o">=</span>  <span class="n">director</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;headshot&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Biography&#39;</span><span class="p">]</span>   <span class="o">=</span>  <span class="n">director</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;biography&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Biography&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;Error&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Birth Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Height ft&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Height m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Birth City&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Birth State&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Birth Country&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Headshot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Biography&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_director_names</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_director_names</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&#34;director_names_analyze.csv&#34;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">311</span><span class="p">):</span> <span class="c1">#df_director_names.itertuples():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># if i % 100 == 0:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     print(f&#34;{df_director_names[&#39;Person_ID&#39;][i]} and  {df_director_names[&#39;Name&#39;][i]}&#34;) </span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     time.sleep(180) # 3 minutes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">director</span> <span class="o">=</span> <span class="n">ia</span><span class="o">.</span><span class="n">get_person</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">df_director_names</span><span class="p">[</span><span class="s1">&#39;Person_ID&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># person_height = director.get(&#39;height&#39;, &#34;&#34;)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># print(person_height)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># if person_height == &#34;&#34;:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     height_m = height_ft = None</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># else:    </span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     height_ft = re.search(&#39;[0-9\&#39;]*\s[0-9]*.?&#39;, str(person_height))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     height_ft = height_ft.group(0)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     height_m = re.search(&#39;\([0-9]+\.?[0-9]*&#39;, str(person_height))</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     height_m = str(height_m.group(0)).replace(&#39;(&#39;,&#39;&#39;)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">birth_list</span> <span class="o">=</span> <span class="n">director</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;birth info&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">birth_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span> <span class="o">=</span> <span class="n">birth_state</span> <span class="o">=</span> <span class="n">birth_country</span> <span class="o">=</span> <span class="kc">None</span>    
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">len</span><span class="p">((</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">birth_state</span><span class="p">,</span> <span class="n">birth_country</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">len</span><span class="p">((</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_state</span><span class="p">,</span> <span class="n">birth_country</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">len</span><span class="p">((</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span> <span class="o">=</span> <span class="n">birth_state</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_country</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">birth_city</span><span class="p">,</span> <span class="n">birth_state</span><span class="p">,</span> <span class="n">birth_country</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">birth_list</span><span class="p">[</span><span class="s1">&#39;birth place&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34;, &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">            <span class="c1">#birth_city = birth_state = birth_country = &#34;Error&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># df_director_names.loc[i, &#39;Birth Date&#39;]  = director.get(&#39;birth date&#39;, None)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># df_director_names.loc[i, &#39;Height ft&#39;]   = height_ft</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># df_director_names.loc[i, &#39;Height m&#39;]    = height_m</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth City&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">birth_city</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth State&#39;</span><span class="p">]</span>      <span class="o">=</span>  <span class="n">birth_state</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_director_names</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Birth Country&#39;</span><span class="p">]</span>   <span class="o">=</span>  <span class="n">birth_country</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># df_director_names.loc[i, &#39;Headshot&#39;]   =  director.get(&#39;headshot&#39;, None)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># try:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     df_director_names.loc[i, &#39;Biography&#39;]   =  director.get(&#39;biography&#39;, None)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># except:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     df_director_names.loc[i, &#39;Biography&#39;] = &#34;Error&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     print(&#34;test&#34;)</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/post/aaf_cleanup/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Exploratory Data Analysis on Black Directors - The Clean Up</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2024 <a href="http://localhost:1313/">Beni Young Profile</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

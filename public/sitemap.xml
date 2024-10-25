@@ -2,14 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/resume/</loc>
-    <lastmod>2024-10-22T09:58:08-04:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-10-22T09:58:08-04:00</lastmod>
+    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/aaf_scraper_clean/</loc>
+    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/aaf_scraper/</loc>
+    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
-    <lastmod>2023-05-29T11:58:08-04:00</lastmod>
+    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/resume/</loc>
+    <lastmod>2024-10-22T09:58:08-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/uber-data-analytics/</loc>
     <lastmod>2023-05-29T11:58:08-04:00</lastmod>
@@ -23,13 +29,9 @@
     <loc>http://localhost:1313/post/project-2/</loc>
     <lastmod>2023-05-10T11:00:59-04:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/aaf_scraper/</loc>
-  </url><url>
     <loc>http://localhost:1313/archives/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url>
