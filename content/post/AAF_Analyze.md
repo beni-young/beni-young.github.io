@@ -1,5 +1,5 @@
 ---
-date: 2024-10-25T00:47:08-04:00
+date: 2024-10-24T00:47:08-04:00
 description: "Analyzing the Black Directors throughout the years - Part III"
 tags:
 title: "Exploratory Data Analysis on Black Directors - The Analysis"

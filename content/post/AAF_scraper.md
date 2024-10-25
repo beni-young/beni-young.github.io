@@ -1,5 +1,5 @@
 ---
-date: 2024-10-24T16:47:08-04:00
+date: 2024-10-25T08:27:08-04:00
 description: "Analyzing the Black Directors throughout the years - Part I"
 tags:
 title: "Exploratory Data Analysis on Black Directors - The Scraper"

@@ -11,14 +11,14 @@
     </image>
     <generator>Hugo -- 0.136.4</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Oct 2024 00:47:08 -0400</lastBuildDate>
+    <lastBuildDate>Fri, 25 Oct 2024 08:27:08 -0400</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Exploratory Data Analysis on Black Directors - The Analysis</title>
-      <link>http://localhost:1313/post/aaf_analyze/</link>
-      <pubDate>Fri, 25 Oct 2024 00:47:08 -0400</pubDate>
-      <guid>http://localhost:1313/post/aaf_analyze/</guid>
-      <description>Analyzing the Black Directors throughout the years - Part III</description>
+      <title>Exploratory Data Analysis on Black Directors - The Scraper</title>
+      <link>http://localhost:1313/post/aaf_scraper/</link>
+      <pubDate>Fri, 25 Oct 2024 08:27:08 -0400</pubDate>
+      <guid>http://localhost:1313/post/aaf_scraper/</guid>
+      <description>Analyzing the Black Directors throughout the years - Part I</description>
     </item>
     <item>
       <title>Exploratory Data Analysis on Black Directors - The Clean Up</title>
@@ -28,11 +28,11 @@
       <description>Analyzing the Black Directors throughout the years - Part II</description>
     </item>
     <item>
-      <title>Exploratory Data Analysis on Black Directors - The Scraper</title>
-      <link>http://localhost:1313/post/aaf_scraper/</link>
-      <pubDate>Thu, 24 Oct 2024 16:47:08 -0400</pubDate>
-      <guid>http://localhost:1313/post/aaf_scraper/</guid>
-      <description>Analyzing the Black Directors throughout the years - Part I</description>
+      <title>Exploratory Data Analysis on Black Directors - The Analysis</title>
+      <link>http://localhost:1313/post/aaf_analyze/</link>
+      <pubDate>Thu, 24 Oct 2024 00:47:08 -0400</pubDate>
+      <guid>http://localhost:1313/post/aaf_analyze/</guid>
+      <description>Analyzing the Black Directors throughout the years - Part III</description>
     </item>
     <item>
       <title></title>
