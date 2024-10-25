@@ -513,6 +513,7 @@ df_movies.loc[df_movies['Year'] == 2021]
 ```python
 df_movies.plot(x = 'Title', y='Year', kind = 'scatter')
 ```
+![AxesSubplot](../../images/aaf_analysis_year_plot.png)
 
 ```python
 import matplotlib.pyplot as plt
@@ -521,7 +522,7 @@ import seaborn as sns
 sns.histplot(df_movies.Year, kde=True)
 plt.show()
 ```
-
+![AxesSubplot](../../images/aa_analyze_histplot.png)
 
 ```python
 df_movies['Year'].describe()
