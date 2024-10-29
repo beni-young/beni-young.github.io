@@ -34,7 +34,7 @@ Via Link -- New Orleans, LA -- August 2022 to Present
 
 -   Responding to all client's inquiries and concerns and recommended alternate approaches when stakeholders' request cannot be met.
 
-**Internship - Systems Configuration Engineer**
+**Systems Configuration Engineer**
 
 Blue Cross and Blue Shield of Louisiana -- New Orleans, LA -- January 2024 to September 2024
 
