@@ -11,6 +11,21 @@
     </image>
     <generator>Hugo -- 0.136.4</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 28 Oct 2024 10:46:21 -0500</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Helldivers 2</title>
+      <link>http://localhost:1313/categories/helldivers-2/</link>
+      <pubDate>Mon, 28 Oct 2024 10:46:21 -0500</pubDate>
+      <guid>http://localhost:1313/categories/helldivers-2/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:1313/categories/linux/</link>
+      <pubDate>Mon, 28 Oct 2024 10:46:21 -0500</pubDate>
+      <guid>http://localhost:1313/categories/linux/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Linux on Beni Young Profile</title>
+    <link>http://localhost:1313/linux/</link>
+    <description>Recent content in Linux on Beni Young Profile</description>
+    <image>
+      <title>Beni Young Profile</title>
+      <url>http://localhost:1313/static/images/5095904.jpg</url>
+      <link>http://localhost:1313/static/images/5095904.jpg</link>
+    </image>
+    <generator>Hugo -- 0.136.4</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 Oct 2024 10:46:21 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Helldivers 2 Steam settings for Fullscreen Issue</title>
+      <link>http://localhost:1313/linux/helldivers-2-fullscreen-issue-workaround/</link>
+      <pubDate>Mon, 28 Oct 2024 10:46:21 -0500</pubDate>
+      <guid>http://localhost:1313/linux/helldivers-2-fullscreen-issue-workaround/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;My Computer Info&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Computer&lt;/strong&gt;&lt;br /&gt;
+Processor	                       : AMD Ryzen 7 5800X3D 8-Core Processor &lt;br /&gt;
+Memory	                           : 16297MB &lt;br /&gt;
+Machine Type	                   : Desktop &lt;br /&gt;
+Operating System	               : Pop!_OS 22.04 LTS &lt;br /&gt;
+Motherboard	                       : X570 Phantom Gaming-ITX/TB3 (ASRock)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version&lt;/strong&gt;&lt;br /&gt;
+Kernel	                           : Linux 6.9.3-76060903-generic (x86_64)  &lt;br /&gt;
+Version	                           : #202405300957~1726766035~22.04~4092a0e SMP REEMPT_DYNAMIC Thu S &lt;br /&gt;
+C Library	                       : GNU C Library / (Ubuntu GLIBC 2.35-0ubuntu3.8) 2.35&lt;/li&gt;
+&lt;li&gt;Display&lt;br /&gt;
+Resolution	                       : 5360x1440 pixels &lt;br /&gt;
+OpenGL Renderer	                   : NVIDIA GeForce RTX 2080/PCIe/SSE2&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Audio Devices&lt;/strong&gt;&lt;br /&gt;
+Audio Adapter	                   : HDA-Intel - HDA NVidia &lt;br /&gt;
+Audio Adapter	                   : USB-Audio - HyperX QuadCast &lt;br /&gt;
+Audio Adapter	                   : HDA-Intel - HD-Audio Generic&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Input Devices&lt;/strong&gt;&lt;br /&gt;
+HP, Inc HyperX QuadCast Consumer Control &lt;br /&gt;
+SteelSeries SteelSeries Rival 500 Gaming Mouse &lt;br /&gt;
+HD-Audio Generic Line Out CLFE &lt;br /&gt;
+BDA NSW Fusion Pro Controller &lt;br /&gt;
+Keychron K8 Keychron K8&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SCSI Disks&lt;/strong&gt;&lt;br /&gt;
+ATA ST4000DM004-2CV1 &lt;br /&gt;
+ATA Samsung SSD 850 &lt;br /&gt;
+ATA Samsung SSD 870&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This is a workaround for running Helldivers 2 on flatpak Steam version that has the fullscreen issue where you have to be in borderless or windowed mode in order
+for the game to start.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fix Helldivers 2 Audio Crackling</title>
+      <link>http://localhost:1313/linux/fix-helldivers-audio-crackling/</link>
+      <pubDate>Fri, 25 Oct 2024 12:46:21 -0500</pubDate>
+      <guid>http://localhost:1313/linux/fix-helldivers-audio-crackling/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

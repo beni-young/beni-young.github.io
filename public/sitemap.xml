@@ -3,16 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/aaf_scraper_clean/</loc>
-    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
+    <lastmod>2024-10-25T08:27:08-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/aaf_scraper/</loc>
-    <lastmod>2024-10-24T16:47:08-04:00</lastmod>
+    <lastmod>2024-10-25T08:27:08-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
+    <lastmod>2024-10-25T08:27:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/aaf_cleanup/</loc>
     <lastmod>2024-10-24T16:47:08-04:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/post/aaf_analyze/</loc>
+    <lastmod>2024-10-24T00:47:08-04:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/resume/</loc>
     <lastmod>2024-10-22T09:58:08-04:00</lastmod>

@@ -120,22 +120,26 @@ menu:
       name: Resume
       url: /resume/
       weight: 10
+    - identifier: linux
+      name: Linux
+      url: /linux/
+      weight: 20
     - identifier: post
       name: Post
       url: /post/
-      weight: 20
+      weight: 30
     - identifier: archives
       name: Archives
       url: /archives/
-      weight: 30
+      weight: 40
     - identifier: linkedin
       name: Linkedin
       url: "https://www.linkedin.com/in/beni-young-0531a3235/"
-      weight: 40
+      weight: 50
     - identifier: github
       name: Github
       url: "https://github.com/beni-young"
-      weight: 50
+      weight: 60
     
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
